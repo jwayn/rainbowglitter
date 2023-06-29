@@ -1,0 +1,142 @@
+[gd_scene load_steps=10 format=3 uid="uid://dgfdytn6mtnfw"]
+
+[ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://player.tscn" id="1_2io6t"]
+[ext_resource type="Script" path="res://BGMover.gd" id="1_3i768"]
+[ext_resource type="Texture2D" uid="uid://df2n8hdi05fhi" path="res://Sprites/Background_Black.png" id="1_aco2m"]
+[ext_resource type="Texture2D" uid="uid://cx06dw1hrd1xd" path="res://Sprites/StarLayer_Blue.png" id="2_uxot7"]
+[ext_resource type="Texture2D" uid="uid://c1267vio1vqh4" path="res://Sprites/StarLayer_RedGreen.png" id="4_0ehjs"]
+[ext_resource type="PackedScene" uid="uid://bh0axoux7sa6y" path="res://Enemy.tscn" id="5_1smwy"]
+[ext_resource type="PackedScene" uid="uid://du2kmn8qvbkt0" path="res://player_base_bullet.tscn" id="7_28swo"]
+
+[sub_resource type="Curve2D" id="Curve2D_pvr7d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 300, -169, 0, 0, 0, 0, 300, -147, 1.34543, -201.815, -1.34543, 201.815, -2, 487, -182.979, -145.307, 182.979, 145.307, 215, 987, 0, 0, 0, 0, 384, 1256, 0, 0, 0, 0, 382, 1255)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_i0mjn"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -281, 14, 0, 0, 0, 0, -288.159, 48.628, -64.5312, -125.517, 64.5312, 125.517, -236, 222, 67.8056, -111.879, -67.8056, 111.879, -284, 502, -76.2813, -86.4522, 76.2813, 86.4522, -289, 781, -34.7504, -83.9095, 34.7504, 83.9095, -131, 927, 0, 0, 0, 0, -44, 1095)
+}
+point_count = 7
+
+[node name="World" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(960, 0)
+metadata/_edit_lock_ = true
+
+[node name="Layer 1" type="Node2D" parent="Background"]
+script = ExtResource("1_3i768")
+metadata/_edit_lock_ = true
+
+[node name="Bg1" type="Sprite2D" parent="Background/Layer 1"]
+texture_filter = 1
+position = Vector2(0, 540)
+scale = Vector2(2, 2)
+texture = ExtResource("1_aco2m")
+metadata/_edit_lock_ = true
+
+[node name="Bg2" type="Sprite2D" parent="Background/Layer 1"]
+texture_filter = 1
+position = Vector2(0, 1620)
+scale = Vector2(2, 2)
+texture = ExtResource("1_aco2m")
+metadata/_edit_lock_ = true
+
+[node name="Bg3" type="Sprite2D" parent="Background/Layer 1"]
+texture_filter = 1
+position = Vector2(0, -539)
+scale = Vector2(2, 2)
+texture = ExtResource("1_aco2m")
+metadata/_edit_lock_ = true
+
+[node name="Layer 2" type="Node2D" parent="Background"]
+script = ExtResource("1_3i768")
+parallax_speed = 0.5
+metadata/_edit_lock_ = true
+
+[node name="Bg1" type="Sprite2D" parent="Background/Layer 2"]
+texture_filter = 1
+position = Vector2(0, 540)
+scale = Vector2(2, 2)
+texture = ExtResource("2_uxot7")
+metadata/_edit_lock_ = true
+
+[node name="Bg2" type="Sprite2D" parent="Background/Layer 2"]
+texture_filter = 1
+position = Vector2(0, 1620)
+scale = Vector2(2, 2)
+texture = ExtResource("2_uxot7")
+metadata/_edit_lock_ = true
+
+[node name="Bg3" type="Sprite2D" parent="Background/Layer 2"]
+texture_filter = 1
+position = Vector2(0, -539)
+scale = Vector2(2, 2)
+texture = ExtResource("2_uxot7")
+metadata/_edit_lock_ = true
+
+[node name="Layer 3" type="Node2D" parent="Background"]
+script = ExtResource("1_3i768")
+parallax_speed = 1.25
+metadata/_edit_lock_ = true
+
+[node name="Bg1" type="Sprite2D" parent="Background/Layer 3"]
+texture_filter = 1
+position = Vector2(0, 540)
+scale = Vector2(2, 2)
+texture = ExtResource("4_0ehjs")
+metadata/_edit_lock_ = true
+
+[node name="Bg2" type="Sprite2D" parent="Background/Layer 3"]
+texture_filter = 1
+position = Vector2(0, 1620)
+scale = Vector2(2, 2)
+texture = ExtResource("4_0ehjs")
+metadata/_edit_lock_ = true
+
+[node name="Bg3" type="Sprite2D" parent="Background/Layer 3"]
+texture_filter = 1
+position = Vector2(0, -539)
+scale = Vector2(2, 2)
+texture = ExtResource("4_0ehjs")
+metadata/_edit_lock_ = true
+
+[node name="EnemyManager" type="Node2D" parent="."]
+position = Vector2(954, -115)
+
+[node name="FlightPaths" type="Node2D" parent="EnemyManager"]
+position = Vector2(1, 84)
+
+[node name="Path 1" type="Path2D" parent="EnemyManager/FlightPaths"]
+curve = SubResource("Curve2D_pvr7d")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/Path 1"]
+position = Vector2(300, -169)
+rotation = 1.5708
+
+[node name="Enemy" parent="EnemyManager/FlightPaths/Path 1/PathFollow2D" instance=ExtResource("5_1smwy")]
+position = Vector2(-29.9621, -0.517822)
+rotation = -1.56905
+
+[node name="Path2D" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(250, 0)
+curve = SubResource("Curve2D_i0mjn")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/Path2D"]
+position = Vector2(-281, 14)
+rotation = 1.77466
+
+[node name="Enemy" parent="EnemyManager/FlightPaths/Path2D/PathFollow2D" instance=ExtResource("5_1smwy")]
+position = Vector2(-27.4185, -15.1401)
+rotation = -1.07338
+
+[node name="Player" parent="." instance=ExtResource("1_2io6t")]
+position = Vector2(965, 912)
+scale = Vector2(2, 2)
+fire_rate = 0.075
+
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="PlayerBaseBullet" parent="." instance=ExtResource("7_28swo")]

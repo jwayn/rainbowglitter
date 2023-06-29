@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbekokqy5744j"]
+
+[ext_resource type="Script" path="res://PlayerMovement.gd" id="1_6tdef"]
+[ext_resource type="Texture2D" uid="uid://ddmaxweb85cr8" path="res://Sprites/Jet_Sprite_01.png" id="2_o7k6q"]
+[ext_resource type="Texture2D" uid="uid://cgaa404ny8jae" path="res://Sprites/JetEngineFire_01.png" id="3_yeh5m"]
+[ext_resource type="Texture2D" uid="uid://bvijtf0peduy8" path="res://Sprites/JetEngineFire_02.png" id="4_rb60a"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0825u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_yeh5m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rb60a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14ryl"]
+radius = 12.0
+height = 24.0
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_6tdef")
+
+[node name="Ship" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0.5, 0)
+texture = ExtResource("2_o7k6q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ship"]
+texture_filter = 1
+position = Vector2(-0.5, 18.709)
+scale = Vector2(1, 0.27)
+sprite_frames = SubResource("SpriteFrames_0825u")
+autoplay = "default"
+frame_progress = 0.168045
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_14ryl")
+
+[node name="Powers" type="Node2D" parent="."]
+
+[node name="Left Gun 1" type="Marker2D" parent="."]
+position = Vector2(-7, -7)
+
+[node name="Left Gun 2" type="Marker2D" parent="."]
+position = Vector2(-11, 0)
+
+[node name="Right Gun 1" type="Marker2D" parent="."]
+position = Vector2(7, -7)
+
+[node name="Right Gun 2" type="Marker2D" parent="."]
+position = Vector2(11, 0)
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
