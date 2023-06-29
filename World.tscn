@@ -140,3 +140,5 @@ fire_rate = 0.075
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="PlayerBaseBullet" parent="." instance=ExtResource("7_28swo")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
