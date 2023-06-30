@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bh0axoux7sa6y"]
 
 [ext_resource type="Script" path="res://Enemy.gd" id="1_io2sp"]
-[ext_resource type="Texture2D" uid="uid://cov5aeb1wbvhn" path="res://Sprites/Penis.png" id="2_vv3y2"]
+[ext_resource type="Texture2D" uid="uid://bqwlosq544olv" path="res://Sprites/Enemy_02.png" id="2_v0x05"]
 
 [node name="Enemy" type="Node2D"]
 position = Vector2(414.602, 130.588)
@@ -10,9 +10,8 @@ script = ExtResource("1_io2sp")
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 texture_filter = 1
-rotation = 1.5708
 scale = Vector2(2, 2)
-texture = ExtResource("2_vv3y2")
+texture = ExtResource("2_v0x05")
 
 [node name="BulletPoint" type="Marker2D" parent="."]
 position = Vector2(-1, 35)

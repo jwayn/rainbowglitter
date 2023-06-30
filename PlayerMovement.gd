@@ -62,7 +62,7 @@ func _fire_weapon():
 		b2.position = right_gun_1.global_position
 		can_fire = false
 		$FireTimer.start(fire_rate)
-
+		$RandomAudioPlayer.play_random_sound()
 
 func _on_fire_timer_timeout():
 	can_fire = true

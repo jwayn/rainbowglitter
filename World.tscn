@@ -135,7 +135,6 @@ rotation = -1.07338
 [node name="Player" parent="." instance=ExtResource("1_2io6t")]
 position = Vector2(965, 912)
 scale = Vector2(2, 2)
-fire_rate = 0.075
 
 [node name="Bullets" type="Node2D" parent="."]
 

@@ -1,9 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbekokqy5744j"]
+[gd_scene load_steps=20 format=3 uid="uid://dbekokqy5744j"]
 
 [ext_resource type="Script" path="res://PlayerMovement.gd" id="1_6tdef"]
 [ext_resource type="Texture2D" uid="uid://ddmaxweb85cr8" path="res://Sprites/Jet_Sprite_01.png" id="2_o7k6q"]
 [ext_resource type="Texture2D" uid="uid://cgaa404ny8jae" path="res://Sprites/JetEngineFire_01.png" id="3_yeh5m"]
 [ext_resource type="Texture2D" uid="uid://bvijtf0peduy8" path="res://Sprites/JetEngineFire_02.png" id="4_rb60a"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://random_audio_player.tscn" id="5_gswxp"]
+[ext_resource type="AudioStream" uid="uid://dffe4prny8etp" path="res://Audio/Ship_Gun_01.wav" id="6_b1nck"]
+[ext_resource type="AudioStream" uid="uid://cj2oi1youotos" path="res://Audio/Ship_Gun_02.wav" id="7_5tukj"]
+[ext_resource type="AudioStream" uid="uid://dvj1la372np24" path="res://Audio/Ship_Gun_03.wav" id="8_omirw"]
+[ext_resource type="AudioStream" uid="uid://bbbfli6uqi4v6" path="res://Audio/Ship_Gun_04.wav" id="9_4r2ey"]
+[ext_resource type="AudioStream" uid="uid://b7svfei86yhn8" path="res://Audio/Ship_Gun_05.wav" id="10_fdw4a"]
+[ext_resource type="AudioStream" uid="uid://brndxffs7k0ec" path="res://Audio/Ship_Gun_06.wav" id="11_cf2dr"]
+[ext_resource type="AudioStream" uid="uid://bkuaxs0f8spcv" path="res://Audio/Ship_Gun_07.wav" id="12_ot21u"]
+[ext_resource type="AudioStream" uid="uid://cxs8nxa6usiyy" path="res://Audio/Ship_Gun_08.wav" id="13_yq1bm"]
+[ext_resource type="AudioStream" uid="uid://c0ewdn6qq46ad" path="res://Audio/Ship_Gun_09.wav" id="14_jjftt"]
+[ext_resource type="AudioStream" uid="uid://balmg861swaf7" path="res://Audio/Ship_Gun_10.wav" id="15_0h06s"]
+[ext_resource type="AudioStream" uid="uid://cgewo75eic0et" path="res://Audio/Ship_Gun_11.wav" id="16_6546e"]
+[ext_resource type="AudioStream" uid="uid://bipo1t1uufx16" path="res://Audio/Ship_Gun_12.wav" id="17_i21wr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0825u"]
 animations = [{
@@ -60,5 +73,8 @@ position = Vector2(7, -7)
 position = Vector2(11, 0)
 
 [node name="FireTimer" type="Timer" parent="."]
+
+[node name="RandomAudioPlayer" parent="." instance=ExtResource("5_gswxp")]
+sounds = Array[AudioStreamWAV]([ExtResource("6_b1nck"), ExtResource("7_5tukj"), ExtResource("8_omirw"), ExtResource("9_4r2ey"), ExtResource("10_fdw4a"), ExtResource("11_cf2dr"), ExtResource("12_ot21u"), ExtResource("13_yq1bm"), ExtResource("14_jjftt"), ExtResource("15_0h06s"), ExtResource("16_6546e"), ExtResource("17_i21wr")])
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
