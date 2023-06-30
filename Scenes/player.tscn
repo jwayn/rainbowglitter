@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dbekokqy5744j"]
+[gd_scene load_steps=28 format=3 uid="uid://dbekokqy5744j"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_jpwwv"]
 [ext_resource type="Texture2D" uid="uid://ddmaxweb85cr8" path="res://Sprites/Jet_Sprite_01.png" id="2_o7k6q"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="19_iihin"]
 [ext_resource type="PackedScene" uid="uid://0tqe7fc32ij6" path="res://Components/player_weapon_component.tscn" id="20_3x3as"]
 [ext_resource type="PackedScene" uid="uid://dvr1ptv5elroc" path="res://Scenes/player_default_bullet_1.tscn" id="21_6hc4h"]
+[ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="22_xw0h1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0825u"]
 animations = [{
@@ -42,6 +43,41 @@ height = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dl6jv"]
 radius = 12.0
+
+[sub_resource type="Animation" id="Animation_vvkyf"]
+resource_name = "die"
+length = 0.3615
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("explosion:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.00290622, 0.0431089, 0.0857335, 0.171467, 0.233466, 0.276091, 0.309028),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.359887),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlvl7"]
+_data = {
+"die": SubResource("Animation_vvkyf")
+}
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_jpwwv")
@@ -96,12 +132,28 @@ shape = SubResource("CircleShape2D_dl6jv")
 MAX_HEALTH = 3
 STARTING_HEALTH = 3
 
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xlvl7")
+}
+
+[node name="explosion" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("22_xw0h1")
+hframes = 7
+frame = 6
+
 [node name="PlayerWeaponComponent" parent="." node_paths=PackedStringArray("projectile_origin", "bullets_container") instance=ExtResource("20_3x3as")]
-time_between_shots = 0.25
+time_between_shots = 0.07
 projectile = ExtResource("21_6hc4h")
 projectile_origin = NodePath("../Left Gun 1")
 bullets_container = NodePath("../Bullets")
 
-[node name="Bullets" type="Node2D" parent="."]
+[node name="PlayerWeaponComponent2" parent="." node_paths=PackedStringArray("projectile_origin") instance=ExtResource("20_3x3as")]
+time_between_shots = 0.07
+projectile = ExtResource("21_6hc4h")
+projectile_origin = NodePath("../Right Gun 1")
 
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]

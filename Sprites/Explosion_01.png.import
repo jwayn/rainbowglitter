@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cov5aeb1wbvhn"
-path="res://.godot/imported/Penis.png-aba333d5c2e289909ba3646815ee9297.ctex"
+uid="uid://b2w1km26yjuiy"
+path="res://.godot/imported/Explosion_01.png-0ecaa1498e1c143b8f193a842426a259.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Penis.png"
-dest_files=["res://.godot/imported/Penis.png-aba333d5c2e289909ba3646815ee9297.ctex"]
+source_file="res://Sprites/Explosion_01.png"
+dest_files=["res://.godot/imported/Explosion_01.png-0ecaa1498e1c143b8f193a842426a259.ctex"]
 
 [params]
 

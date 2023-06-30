@@ -9,6 +9,8 @@ var base_bullet
 var left_gun_1
 var right_gun_1
 
+var is_dead: bool = false
+
 
 func _ready():
 	flame_trail = $Ship/AnimatedSprite2D
@@ -42,8 +44,16 @@ func handle_movement(delta):
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	handle_movement(delta)
+	if !is_dead:
+		handle_movement(delta)
 
 
 func _on_health_component_health_depleted():
+	is_dead = true
+	$Ship.visible = false
+	$explosion.visible = true
+	$AnimationPlayer.play('die')
+	
+
+func die():
 	queue_free()

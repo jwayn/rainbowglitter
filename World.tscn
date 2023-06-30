@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cx06dw1hrd1xd" path="res://Sprites/StarLayer_Blue.png" id="2_uxot7"]
 [ext_resource type="Texture2D" uid="uid://c1267vio1vqh4" path="res://Sprites/StarLayer_RedGreen.png" id="4_0ehjs"]
 [ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="5_1smwy"]
-[ext_resource type="PackedScene" uid="uid://du2kmn8qvbkt0" path="res://Scenes/player_base_bullet.tscn" id="7_28swo"]
+[ext_resource type="Script" path="res://EnemyManager.gd" id="5_me07y"]
 
 [sub_resource type="Curve2D" id="Curve2D_guak6"]
 _data = {
@@ -147,6 +147,8 @@ metadata/_edit_lock_ = true
 
 [node name="EnemyManager" type="Node2D" parent="."]
 position = Vector2(954, -115)
+script = ExtResource("5_me07y")
+enemy_types = Array[PackedScene]([ExtResource("5_1smwy")])
 
 [node name="FlightPaths" type="Node2D" parent="EnemyManager"]
 position = Vector2(1, 84)
@@ -154,110 +156,53 @@ position = Vector2(1, 84)
 [node name="VerticalPath1" type="Path2D" parent="EnemyManager/FlightPaths"]
 curve = SubResource("Curve2D_guak6")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath1"]
-position = Vector2(-331, -27)
-rotation = 1.5708
-
 [node name="VerticalPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(-81, 0)
 curve = SubResource("Curve2D_jedp8")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath2"]
-position = Vector2(-168, -27)
-rotation = 1.5708
 
 [node name="VerticalPath3" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(-160, -9)
 curve = SubResource("Curve2D_hkgc2")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath3"]
-position = Vector2(0, -27)
-rotation = 1.5708
-
 [node name="VerticalPath4" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(-234, -8)
 curve = SubResource("Curve2D_x3hvu")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath4"]
-position = Vector2(160, -27)
-rotation = 1.5708
 
 [node name="VerticalPath5" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(-325, -11)
 curve = SubResource("Curve2D_dqgbt")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath5"]
-position = Vector2(335, -27)
-rotation = 1.5708
-
 [node name="VerticalPath6" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(410, 0)
 curve = SubResource("Curve2D_guak6")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath6"]
-position = Vector2(-331, -27)
-rotation = 1.5708
 
 [node name="VerticalPath7" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(329, 0)
 curve = SubResource("Curve2D_jedp8")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath7"]
-position = Vector2(-168, -27)
-rotation = 1.5708
-
 [node name="VerticalPath8" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(250, -9)
 curve = SubResource("Curve2D_hkgc2")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath8"]
-position = Vector2(0, -27)
-rotation = 1.5708
 
 [node name="VerticalPath9" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(176, -8)
 curve = SubResource("Curve2D_x3hvu")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath9"]
-position = Vector2(160, -27)
-rotation = 1.5708
-
 [node name="CircularPath1" type="Path2D" parent="EnemyManager/FlightPaths"]
 curve = SubResource("Curve2D_mhuca")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/CircularPath1"]
-position = Vector2(-637, 88)
-rotation = 0.113239
-
-[node name="Enemy" parent="EnemyManager/FlightPaths/CircularPath1/PathFollow2D" instance=ExtResource("5_1smwy")]
-rotation = 1.42419
 
 [node name="CircularPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(13, 3)
 curve = SubResource("Curve2D_gr2uy")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/CircularPath2"]
-position = Vector2(603, 86)
-rotation = 2.99581
-
 [node name="DiagonalPath1" type="Path2D" parent="EnemyManager/FlightPaths"]
 curve = SubResource("Curve2D_dpvxx")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/DiagonalPath1"]
-position = Vector2(-354, -39)
-rotation = 1.04357
-
 [node name="DiagonalPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
 curve = SubResource("Curve2D_ujtpf")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/DiagonalPath2"]
-position = Vector2(371, -43)
-rotation = 2.09852
 
 [node name="Player" parent="." instance=ExtResource("1_2io6t")]
 position = Vector2(965, 912)
 scale = Vector2(2, 2)
 
 [node name="Bullets" type="Node2D" parent="."]
-
-[node name="PlayerBaseBullet" parent="." instance=ExtResource("7_28swo")]

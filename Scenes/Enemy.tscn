@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://devi6hyt0i4pk"]
+[gd_scene load_steps=11 format=3 uid="uid://devi6hyt0i4pk"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_io2sp"]
 [ext_resource type="Texture2D" uid="uid://bqwlosq544olv" path="res://Sprites/Enemy_02.png" id="2_v0x05"]
@@ -6,32 +6,72 @@
 [ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="4_h3qp5"]
 [ext_resource type="PackedScene" uid="uid://0tqe7fc32ij6" path="res://Components/player_weapon_component.tscn" id="5_wck6l"]
 [ext_resource type="Script" path="res://Scripts/ProjectileComponent.gd" id="6_lc7th"]
+[ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="7_q3ify"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
 radius = 20.4819
 height = 87.1217
 
-[node name="Enemy" type="Node2D"]
+[sub_resource type="Animation" id="Animation_tsykn"]
+resource_name = "Die"
+length = 0.4302
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04236, 0.0924699, 0.175517, 0.248877, 0.340158, 0.386043),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.429152),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
+_data = {
+"Die": SubResource("Animation_tsykn")
+}
+
+[node name="Enemy" type="PathFollow2D"]
+lookahead = 52.762
 script = ExtResource("1_io2sp")
+speed = 250
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 texture_filter = 1
+rotation = -1.5708
 scale = Vector2(2, 2)
 texture = ExtResource("2_v0x05")
 
 [node name="BulletPoint" type="Marker2D" parent="."]
-position = Vector2(-1, 35)
+position = Vector2(34, 0)
 
 [node name="ShotTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_uknm1")]
-MAX_HEALTH = 6
-STARTING_HEALTH = 6
+MAX_HEALTH = 2
+STARTING_HEALTH = 2
 VISIBLE_HEALTH_BAR = false
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_h3qp5")]
+rotation = -1.5708
 collision_layer = 2
 health_component = NodePath("../HealthComponent")
 
@@ -42,6 +82,18 @@ shape = SubResource("CapsuleShape2D_52kuw")
 
 [node name="ProjectileComponent" type="Node2D" parent="."]
 script = ExtResource("6_lc7th")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k4i2n")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("7_q3ify")
+hframes = 7
+frame = 6
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
