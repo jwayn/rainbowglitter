@@ -1,0 +1,26 @@
+[gd_scene load_steps=15 format=3 uid="uid://0tqe7fc32ij6"]
+
+[ext_resource type="Script" path="res://Scripts/EnemyWeaponComponent.gd" id="1_5wvud"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Scenes/random_audio_player.tscn" id="2_5fn3y"]
+[ext_resource type="AudioStream" uid="uid://dffe4prny8etp" path="res://Audio/Ship_Gun_01.wav" id="3_pdq12"]
+[ext_resource type="AudioStream" uid="uid://cj2oi1youotos" path="res://Audio/Ship_Gun_02.wav" id="4_xspkw"]
+[ext_resource type="AudioStream" uid="uid://dvj1la372np24" path="res://Audio/Ship_Gun_03.wav" id="5_a6uwq"]
+[ext_resource type="AudioStream" uid="uid://bbbfli6uqi4v6" path="res://Audio/Ship_Gun_04.wav" id="6_8h4ru"]
+[ext_resource type="AudioStream" uid="uid://b7svfei86yhn8" path="res://Audio/Ship_Gun_05.wav" id="7_fu1o8"]
+[ext_resource type="AudioStream" uid="uid://brndxffs7k0ec" path="res://Audio/Ship_Gun_06.wav" id="8_1fx6x"]
+[ext_resource type="AudioStream" uid="uid://bkuaxs0f8spcv" path="res://Audio/Ship_Gun_07.wav" id="9_yxp42"]
+[ext_resource type="AudioStream" uid="uid://cxs8nxa6usiyy" path="res://Audio/Ship_Gun_08.wav" id="10_iufov"]
+[ext_resource type="AudioStream" uid="uid://c0ewdn6qq46ad" path="res://Audio/Ship_Gun_09.wav" id="11_l36le"]
+[ext_resource type="AudioStream" uid="uid://balmg861swaf7" path="res://Audio/Ship_Gun_10.wav" id="12_34i3i"]
+[ext_resource type="AudioStream" uid="uid://cgewo75eic0et" path="res://Audio/Ship_Gun_11.wav" id="13_4hnk8"]
+[ext_resource type="AudioStream" uid="uid://bipo1t1uufx16" path="res://Audio/Ship_Gun_12.wav" id="14_wswjn"]
+
+[node name="PlayerWeaponComponent" type="Node2D"]
+script = ExtResource("1_5wvud")
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[node name="AudioPlayer" parent="." instance=ExtResource("2_5fn3y")]
+sounds = Array[AudioStreamWAV]([ExtResource("3_pdq12"), ExtResource("4_xspkw"), ExtResource("5_a6uwq"), ExtResource("6_8h4ru"), ExtResource("7_fu1o8"), ExtResource("8_1fx6x"), ExtResource("9_yxp42"), ExtResource("10_iufov"), ExtResource("11_l36le"), ExtResource("12_34i3i"), ExtResource("13_4hnk8"), ExtResource("14_wswjn")])
+
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]

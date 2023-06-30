@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://devi6hyt0i4pk"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_io2sp"]
+[ext_resource type="Texture2D" uid="uid://bqwlosq544olv" path="res://Sprites/Enemy_02.png" id="2_v0x05"]
+[ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="3_uknm1"]
+[ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="4_h3qp5"]
+[ext_resource type="PackedScene" uid="uid://0tqe7fc32ij6" path="res://Components/player_weapon_component.tscn" id="5_wck6l"]
+[ext_resource type="Script" path="res://Scripts/ProjectileComponent.gd" id="6_lc7th"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
+radius = 20.4819
+height = 87.1217
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_io2sp")
+
+[node name="EnemySprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_v0x05")
+
+[node name="BulletPoint" type="Marker2D" parent="."]
+position = Vector2(-1, 35)
+
+[node name="ShotTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_uknm1")]
+MAX_HEALTH = 6
+STARTING_HEALTH = 6
+VISIBLE_HEALTH_BAR = false
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_h3qp5")]
+collision_layer = 2
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CapsuleShape2D_52kuw")
+
+[node name="PlayerWeaponComponent" parent="." instance=ExtResource("5_wck6l")]
+
+[node name="ProjectileComponent" type="Node2D" parent="."]
+script = ExtResource("6_lc7th")
+
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]

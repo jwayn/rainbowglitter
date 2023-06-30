@@ -1,24 +1,66 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=17 format=3 uid="uid://dgfdytn6mtnfw"]
 
-[ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://player.tscn" id="1_2io6t"]
-[ext_resource type="Script" path="res://BGMover.gd" id="1_3i768"]
+[ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
+[ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
 [ext_resource type="Texture2D" uid="uid://df2n8hdi05fhi" path="res://Sprites/Background_Black.png" id="1_aco2m"]
 [ext_resource type="Texture2D" uid="uid://cx06dw1hrd1xd" path="res://Sprites/StarLayer_Blue.png" id="2_uxot7"]
 [ext_resource type="Texture2D" uid="uid://c1267vio1vqh4" path="res://Sprites/StarLayer_RedGreen.png" id="4_0ehjs"]
-[ext_resource type="PackedScene" uid="uid://bh0axoux7sa6y" path="res://Enemy.tscn" id="5_1smwy"]
-[ext_resource type="PackedScene" uid="uid://du2kmn8qvbkt0" path="res://player_base_bullet.tscn" id="7_28swo"]
+[ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="5_1smwy"]
+[ext_resource type="PackedScene" uid="uid://du2kmn8qvbkt0" path="res://Scenes/player_base_bullet.tscn" id="7_28swo"]
 
-[sub_resource type="Curve2D" id="Curve2D_pvr7d"]
+[sub_resource type="Curve2D" id="Curve2D_guak6"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 300, -169, 0, 0, 0, 0, 300, -147, 1.34543, -201.815, -1.34543, 201.815, -2, 487, -182.979, -145.307, 182.979, 145.307, 215, 987, 0, 0, 0, 0, 384, 1256, 0, 0, 0, 0, 382, 1255)
+"points": PackedVector2Array(0, 0, 0, 0, -331, -27, 0, 0, 0, 0, -331, 1145)
 }
-point_count = 6
+point_count = 2
 
-[sub_resource type="Curve2D" id="Curve2D_i0mjn"]
+[sub_resource type="Curve2D" id="Curve2D_jedp8"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -281, 14, 0, 0, 0, 0, -288.159, 48.628, -64.5312, -125.517, 64.5312, 125.517, -236, 222, 67.8056, -111.879, -67.8056, 111.879, -284, 502, -76.2813, -86.4522, 76.2813, 86.4522, -289, 781, -34.7504, -83.9095, 34.7504, 83.9095, -131, 927, 0, 0, 0, 0, -44, 1095)
+"points": PackedVector2Array(0, 0, 0, 0, -168, -27, 0, 0, 0, 0, -168, 1145)
 }
-point_count = 7
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_hkgc2"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -27, 0, 0, 0, 0, 0, 1145)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_x3hvu"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 160, -27, 0, 0, 0, 0, 160, 1145)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_dqgbt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 335, -27, 0, 0, 0, 0, 335, 1145)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_mhuca"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -637, 88, -191.729, -101.694, 191.729, 101.694, -127, 146, 179.797, 110.275, -179.797, -110.275, -264, 409, -162.961, -69.2764, 243.596, 86.4113, -127, 145, -190.488, -243.825, 190.488, 243.825, 5, 1252)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_gr2uy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 603, 86, 134.612, -107.197, -134.612, 109.213, 99, 160, -176.519, 120.642, 176.519, -120.642, 275, 403, 136.667, -103.85, -199.16, 100.826, 112, 155, 187.948, -294.622, -187.948, 294.622, -9, 1254)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_dpvxx"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -354, -39, 0, 0, 0, 0, 372, 1208)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_ujtpf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 371, -43, 0, 0, 0, 0, -357, 1206)
+}
+point_count = 2
 
 [node name="World" type="Node2D"]
 
@@ -109,28 +151,108 @@ position = Vector2(954, -115)
 [node name="FlightPaths" type="Node2D" parent="EnemyManager"]
 position = Vector2(1, 84)
 
-[node name="Path 1" type="Path2D" parent="EnemyManager/FlightPaths"]
-curve = SubResource("Curve2D_pvr7d")
+[node name="VerticalPath1" type="Path2D" parent="EnemyManager/FlightPaths"]
+curve = SubResource("Curve2D_guak6")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/Path 1"]
-position = Vector2(300, -169)
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath1"]
+position = Vector2(-331, -27)
 rotation = 1.5708
 
-[node name="Enemy" parent="EnemyManager/FlightPaths/Path 1/PathFollow2D" instance=ExtResource("5_1smwy")]
-position = Vector2(-29.9621, -0.517822)
-rotation = -1.56905
+[node name="VerticalPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(-81, 0)
+curve = SubResource("Curve2D_jedp8")
 
-[node name="Path2D" type="Path2D" parent="EnemyManager/FlightPaths"]
-position = Vector2(250, 0)
-curve = SubResource("Curve2D_i0mjn")
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath2"]
+position = Vector2(-168, -27)
+rotation = 1.5708
 
-[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/Path2D"]
-position = Vector2(-281, 14)
-rotation = 1.77466
+[node name="VerticalPath3" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(-160, -9)
+curve = SubResource("Curve2D_hkgc2")
 
-[node name="Enemy" parent="EnemyManager/FlightPaths/Path2D/PathFollow2D" instance=ExtResource("5_1smwy")]
-position = Vector2(-27.4185, -15.1401)
-rotation = -1.07338
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath3"]
+position = Vector2(0, -27)
+rotation = 1.5708
+
+[node name="VerticalPath4" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(-234, -8)
+curve = SubResource("Curve2D_x3hvu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath4"]
+position = Vector2(160, -27)
+rotation = 1.5708
+
+[node name="VerticalPath5" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(-325, -11)
+curve = SubResource("Curve2D_dqgbt")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath5"]
+position = Vector2(335, -27)
+rotation = 1.5708
+
+[node name="VerticalPath6" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(410, 0)
+curve = SubResource("Curve2D_guak6")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath6"]
+position = Vector2(-331, -27)
+rotation = 1.5708
+
+[node name="VerticalPath7" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(329, 0)
+curve = SubResource("Curve2D_jedp8")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath7"]
+position = Vector2(-168, -27)
+rotation = 1.5708
+
+[node name="VerticalPath8" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(250, -9)
+curve = SubResource("Curve2D_hkgc2")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath8"]
+position = Vector2(0, -27)
+rotation = 1.5708
+
+[node name="VerticalPath9" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(176, -8)
+curve = SubResource("Curve2D_x3hvu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/VerticalPath9"]
+position = Vector2(160, -27)
+rotation = 1.5708
+
+[node name="CircularPath1" type="Path2D" parent="EnemyManager/FlightPaths"]
+curve = SubResource("Curve2D_mhuca")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/CircularPath1"]
+position = Vector2(-637, 88)
+rotation = 0.113239
+
+[node name="Enemy" parent="EnemyManager/FlightPaths/CircularPath1/PathFollow2D" instance=ExtResource("5_1smwy")]
+rotation = 1.42419
+
+[node name="CircularPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
+position = Vector2(13, 3)
+curve = SubResource("Curve2D_gr2uy")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/CircularPath2"]
+position = Vector2(603, 86)
+rotation = 2.99581
+
+[node name="DiagonalPath1" type="Path2D" parent="EnemyManager/FlightPaths"]
+curve = SubResource("Curve2D_dpvxx")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/DiagonalPath1"]
+position = Vector2(-354, -39)
+rotation = 1.04357
+
+[node name="DiagonalPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
+curve = SubResource("Curve2D_ujtpf")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="EnemyManager/FlightPaths/DiagonalPath2"]
+position = Vector2(371, -43)
+rotation = 2.09852
 
 [node name="Player" parent="." instance=ExtResource("1_2io6t")]
 position = Vector2(965, 912)
@@ -139,5 +261,3 @@ scale = Vector2(2, 2)
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="PlayerBaseBullet" parent="." instance=ExtResource("7_28swo")]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

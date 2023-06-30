@@ -1,10 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://dbekokqy5744j"]
+[gd_scene load_steps=25 format=3 uid="uid://dbekokqy5744j"]
 
-[ext_resource type="Script" path="res://PlayerMovement.gd" id="1_6tdef"]
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_jpwwv"]
 [ext_resource type="Texture2D" uid="uid://ddmaxweb85cr8" path="res://Sprites/Jet_Sprite_01.png" id="2_o7k6q"]
 [ext_resource type="Texture2D" uid="uid://cgaa404ny8jae" path="res://Sprites/JetEngineFire_01.png" id="3_yeh5m"]
 [ext_resource type="Texture2D" uid="uid://bvijtf0peduy8" path="res://Sprites/JetEngineFire_02.png" id="4_rb60a"]
-[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://random_audio_player.tscn" id="5_gswxp"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Scenes/random_audio_player.tscn" id="5_gswxp"]
 [ext_resource type="AudioStream" uid="uid://dffe4prny8etp" path="res://Audio/Ship_Gun_01.wav" id="6_b1nck"]
 [ext_resource type="AudioStream" uid="uid://cj2oi1youotos" path="res://Audio/Ship_Gun_02.wav" id="7_5tukj"]
 [ext_resource type="AudioStream" uid="uid://dvj1la372np24" path="res://Audio/Ship_Gun_03.wav" id="8_omirw"]
@@ -17,6 +17,10 @@
 [ext_resource type="AudioStream" uid="uid://balmg861swaf7" path="res://Audio/Ship_Gun_10.wav" id="15_0h06s"]
 [ext_resource type="AudioStream" uid="uid://cgewo75eic0et" path="res://Audio/Ship_Gun_11.wav" id="16_6546e"]
 [ext_resource type="AudioStream" uid="uid://bipo1t1uufx16" path="res://Audio/Ship_Gun_12.wav" id="17_i21wr"]
+[ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="18_dytp6"]
+[ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="19_iihin"]
+[ext_resource type="PackedScene" uid="uid://0tqe7fc32ij6" path="res://Components/player_weapon_component.tscn" id="20_3x3as"]
+[ext_resource type="PackedScene" uid="uid://dvr1ptv5elroc" path="res://Scenes/player_default_bullet_1.tscn" id="21_6hc4h"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0825u"]
 animations = [{
@@ -36,8 +40,11 @@ animations = [{
 radius = 12.0
 height = 24.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dl6jv"]
+radius = 12.0
+
 [node name="Player" type="Node2D"]
-script = ExtResource("1_6tdef")
+script = ExtResource("1_jpwwv")
 
 [node name="Ship" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -55,6 +62,7 @@ frame_progress = 0.168045
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+visible = false
 position = Vector2(0, 5)
 shape = SubResource("CapsuleShape2D_14ryl")
 
@@ -72,9 +80,28 @@ position = Vector2(7, -7)
 [node name="Right Gun 2" type="Marker2D" parent="."]
 position = Vector2(11, 0)
 
-[node name="FireTimer" type="Timer" parent="."]
-
 [node name="RandomAudioPlayer" parent="." instance=ExtResource("5_gswxp")]
 sounds = Array[AudioStreamWAV]([ExtResource("6_b1nck"), ExtResource("7_5tukj"), ExtResource("8_omirw"), ExtResource("9_4r2ey"), ExtResource("10_fdw4a"), ExtResource("11_cf2dr"), ExtResource("12_ot21u"), ExtResource("13_yq1bm"), ExtResource("14_jjftt"), ExtResource("15_0h06s"), ExtResource("16_6546e"), ExtResource("17_i21wr")])
 
-[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("18_dytp6")]
+collision_layer = 8
+collision_mask = 6
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_dl6jv")
+
+[node name="HealthComponent" parent="." instance=ExtResource("19_iihin")]
+MAX_HEALTH = 3
+STARTING_HEALTH = 3
+
+[node name="PlayerWeaponComponent" parent="." node_paths=PackedStringArray("projectile_origin", "bullets_container") instance=ExtResource("20_3x3as")]
+time_between_shots = 0.25
+projectile = ExtResource("21_6hc4h")
+projectile_origin = NodePath("../Left Gun 1")
+bullets_container = NodePath("../Bullets")
+
+[node name="Bullets" type="Node2D" parent="."]
+
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
