@@ -94,6 +94,12 @@ func _ready():
 			"parent": c1,
 			"spawn_time": 13.0
 		},
+		{
+			"type": 0,
+			"formation": 1,
+			"parent": c1,
+			"spawn_time": 15
+		},
 	]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
