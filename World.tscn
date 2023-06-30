@@ -204,5 +204,6 @@ curve = SubResource("Curve2D_ujtpf")
 [node name="Player" parent="." instance=ExtResource("1_2io6t")]
 position = Vector2(965, 912)
 scale = Vector2(2, 2)
+move_speed = 250.0
 
 [node name="Bullets" type="Node2D" parent="."]
