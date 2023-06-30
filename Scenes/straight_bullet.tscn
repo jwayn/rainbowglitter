@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvqexymn7w7q1"]
+[gd_scene load_steps=8 format=3 uid="uid://bvqexymn7w7q1"]
 
-[ext_resource type="Script" path="res://Bullet.gd" id="1_l2nrx"]
-[ext_resource type="Texture2D" uid="uid://bkoksbnuqw8ma" path="res://Sprites/Bullet_03.png" id="2_dl7h2"]
+[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="1_4m6lk"]
+[ext_resource type="Texture2D" uid="uid://bkoksbnuqw8ma" path="res://Sprites/Bullet_03.png" id="2_fhugu"]
+[ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="3_8ku15"]
 
 [sub_resource type="Animation" id="Animation_0k2iu"]
 resource_name = "new_animation"
@@ -25,8 +26,8 @@ _data = {
 "rotate_forever": SubResource("Animation_0k2iu")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_m8b5a"]
-radius = 7.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_40nac"]
+radius = 6.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a4o77"]
 emission_shape = 1
@@ -42,13 +43,13 @@ hue_variation_min = 0.03
 hue_variation_max = 0.32
 
 [node name="StraightBullet" type="Node2D"]
-script = ExtResource("1_l2nrx")
+script = ExtResource("1_4m6lk")
 
 [node name="BulletSprite" type="Sprite2D" parent="."]
 texture_filter = 1
 rotation = -3.14159
 scale = Vector2(2, 2)
-texture = ExtResource("2_dl7h2")
+texture = ExtResource("2_fhugu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BulletSprite"]
 root_node = NodePath("../..")
@@ -57,10 +58,13 @@ libraries = {
 "": SubResource("AnimationLibrary_ee2vc")
 }
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="HitboxComponent" parent="." instance=ExtResource("3_8ku15")]
+collision_layer = 2
+collision_mask = 8
+damage = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_m8b5a")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_40nac")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 process_material = SubResource("ParticleProcessMaterial_a4o77")

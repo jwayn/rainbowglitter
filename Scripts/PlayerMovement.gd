@@ -2,21 +2,18 @@ extends Node2D
 
 
 @export var move_speed = 150.0
-@export var fire_rate = .125
 var is_moving = false
 var flame_trail
 var base_bullet
 
-var can_fire = true
 var left_gun_1
 var right_gun_1
+
+var is_dead: bool = false
 
 
 func _ready():
 	flame_trail = $Ship/AnimatedSprite2D
-	base_bullet = load("res://player_base_bullet.tscn")
-	left_gun_1 = $"Left Gun 1"
-	right_gun_1 = $"Right Gun 1"
 
 func handle_movement(delta):
 	# Creates a variable to store our movement direction in
@@ -29,9 +26,6 @@ func handle_movement(delta):
 		direction += Vector2.LEFT
 	if Input.is_action_pressed("ui_right"):
 		direction += Vector2.RIGHT
-		
-	if Input.is_action_pressed("ui_accept"):
-		_fire_weapon()
 
 	# We are moving if our direction vector isn't 0,0
 	if direction != Vector2(0,0):
@@ -50,19 +44,16 @@ func handle_movement(delta):
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	handle_movement(delta)
-	
-func _fire_weapon():
-	if can_fire:
-		var b1 = base_bullet.instantiate()
-		var b2 = base_bullet.instantiate()
-		$/root/World/Bullets.add_child(b1)
-		$/root/World/Bullets.add_child(b2)
-		b1.position = left_gun_1.global_position
-		b2.position = right_gun_1.global_position
-		can_fire = false
-		$FireTimer.start(fire_rate)
-		$RandomAudioPlayer.play_random_sound()
+	if !is_dead:
+		handle_movement(delta)
 
-func _on_fire_timer_timeout():
-	can_fire = true
+
+func _on_health_component_health_depleted():
+	is_dead = true
+	$Ship.visible = false
+	$explosion.visible = true
+	$AnimationPlayer.play('die')
+	
+
+func die():
+	queue_free()
