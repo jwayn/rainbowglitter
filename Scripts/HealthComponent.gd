@@ -8,6 +8,7 @@ extends Node2D
 
 
 signal health_depleted
+signal damage_taken
 
 @onready var current_health: int = STARTING_HEALTH
 var is_invincible: bool
@@ -20,8 +21,9 @@ func _process(delta):
 
 
 func take_damage(damage) -> void:
-	if !is_invincible:
+	if !is_invincible && current_health > 0:
 		current_health -= damage
+		damage_taken.emit()
 
 
 func gain_health(health) -> void:

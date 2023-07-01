@@ -1,12 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://devi6hyt0i4pk"]
+[gd_scene load_steps=15 format=3 uid="uid://devi6hyt0i4pk"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_io2sp"]
 [ext_resource type="Texture2D" uid="uid://bqwlosq544olv" path="res://Sprites/Enemy_02.png" id="2_v0x05"]
+[ext_resource type="Shader" path="res://Scenes/HitFlash.gdshader" id="2_y4tey"]
 [ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="3_uknm1"]
 [ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="4_h3qp5"]
 [ext_resource type="PackedScene" uid="uid://0tqe7fc32ij6" path="res://Components/player_weapon_component.tscn" id="5_wck6l"]
 [ext_resource type="Script" path="res://Scripts/ProjectileComponent.gd" id="6_lc7th"]
 [ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="7_q3ify"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_irfvh"]
+resource_local_to_scene = true
+shader = ExtResource("2_y4tey")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
 radius = 20.4819
@@ -42,9 +49,42 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_oafv2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vx1ih"]
+resource_name = "hit"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0573755, 0.118626),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
 _data = {
-"Die": SubResource("Animation_tsykn")
+"Die": SubResource("Animation_tsykn"),
+"RESET": SubResource("Animation_oafv2"),
+"hit": SubResource("Animation_vx1ih")
 }
 
 [node name="Enemy" type="PathFollow2D"]
@@ -54,6 +94,7 @@ speed = 250
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_irfvh")
 rotation = -1.5708
 scale = Vector2(2, 2)
 texture = ExtResource("2_v0x05")
@@ -66,13 +107,12 @@ wait_time = 0.5
 autostart = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_uknm1")]
-MAX_HEALTH = 2
-STARTING_HEALTH = 2
-VISIBLE_HEALTH_BAR = false
+MAX_HEALTH = 10
+STARTING_HEALTH = 10
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_h3qp5")]
 rotation = -1.5708
-collision_layer = 2
+collision_layer = 4
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
@@ -93,7 +133,7 @@ visible = false
 scale = Vector2(2, 2)
 texture = ExtResource("7_q3ify")
 hframes = 7
-frame = 6
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]

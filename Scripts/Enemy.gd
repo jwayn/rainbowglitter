@@ -52,3 +52,7 @@ func _on_hurtbox_component_has_hurt():
 	
 func die():
 	queue_free()
+
+
+func _on_health_component_damage_taken():
+	$AnimationPlayer.play('hit')

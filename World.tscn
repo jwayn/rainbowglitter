@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=24 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -10,57 +10,80 @@
 
 [sub_resource type="Curve2D" id="Curve2D_guak6"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -331, -27, 0, 0, 0, 0, -331, 1145)
+"points": PackedVector2Array(0, 0, 0, 0, -331, -50, 0, 0, 0, 0, -331, 1463)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_jedp8"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -168, -27, 0, 0, 0, 0, -168, 1145)
+"points": PackedVector2Array(0, 0, 0, 0, -168, -50, 0, 0, 0, 0, -168, 1459)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_hkgc2"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, -27, 0, 0, 0, 0, 0, 1145)
+"points": PackedVector2Array(0, 0, 0, 0, 0, -50, 0, 0, 0, 0, 0, 1472)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_x3hvu"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 160, -27, 0, 0, 0, 0, 160, 1145)
+"points": PackedVector2Array(0, 0, 0, 0, 160, -50, 0, 0, 0, 0, 160, 1465)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_dqgbt"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 335, -27, 0, 0, 0, 0, 335, 1145)
+"points": PackedVector2Array(0, 0, 0, 0, 335, -50, 0, 0, 0, 0, 333, 1490)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_mhuca"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -637, 88, -191.729, -101.694, 191.729, 101.694, -127, 146, 179.797, 110.275, -179.797, -110.275, -264, 409, -162.961, -69.2764, 243.596, 86.4113, -127, 145, -190.488, -243.825, 190.488, 243.825, 5, 1252)
+"points": PackedVector2Array(0, 0, 0, 0, -637, 88, -191.729, -101.694, 191.729, 101.694, -127, 146, 179.797, 110.275, -179.797, -110.275, -264, 409, -162.961, -69.2764, 243.596, 86.4113, -127, 145, -190.488, -243.825, 190.488, 243.825, 6, 1480)
 }
 point_count = 5
 
 [sub_resource type="Curve2D" id="Curve2D_gr2uy"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 603, 86, 134.612, -107.197, -134.612, 109.213, 99, 160, -176.519, 120.642, 176.519, -120.642, 275, 403, 136.667, -103.85, -199.16, 100.826, 112, 155, 187.948, -294.622, -187.948, 294.622, -9, 1254)
+"points": PackedVector2Array(0, 0, 0, 0, 603, 86, 134.612, -107.197, -134.612, 109.213, 99, 160, -176.519, 120.642, 176.519, -120.642, 275, 403, 136.667, -103.85, -199.16, 100.826, 112, 155, 187.948, -294.622, -187.948, 294.622, -4, 1475)
 }
 point_count = 5
 
 [sub_resource type="Curve2D" id="Curve2D_dpvxx"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -354, -39, 0, 0, 0, 0, 372, 1208)
+"points": PackedVector2Array(0, 0, 0, 0, -354, -39, 0, 0, 0, 0, 383, 1358)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_ujtpf"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 371, -43, 0, 0, 0, 0, -357, 1206)
+"points": PackedVector2Array(0, 0, 0, 0, 371, -43, 0, 0, 0, 0, -381, 1349)
 }
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_n5row"]
+colors = PackedColorArray(0, 0, 0, 1, 0.0627451, 0.0941176, 0.219608, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sg8jp"]
+gradient = SubResource("Gradient_n5row")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ryop7"]
+gradient = SubResource("Gradient_n5row")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0yos"]
+size = Vector2(816, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d46bt"]
+size = Vector2(24, 1085)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqf30"]
+size = Vector2(24, 1081)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_krtr3"]
+size = Vector2(816, 24)
 
 [node name="World" type="Node2D"]
 
@@ -207,3 +230,36 @@ scale = Vector2(2, 2)
 move_speed = 250.0
 
 [node name="Bullets" type="Node2D" parent="."]
+
+[node name="LR Covers" type="Node2D" parent="."]
+
+[node name="Left" type="Sprite2D" parent="LR Covers"]
+position = Vector2(288, 540)
+scale = Vector2(9, 16.875)
+texture = SubResource("GradientTexture2D_sg8jp")
+
+[node name="Left2" type="Sprite2D" parent="LR Covers"]
+position = Vector2(1632, 540)
+scale = Vector2(9, 16.875)
+texture = SubResource("GradientTexture2D_ryop7")
+
+[node name="MapBoundary" type="StaticBody2D" parent="."]
+disable_mode = 1
+collision_layer = 16
+collision_mask = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBoundary"]
+position = Vector2(960, -10)
+shape = SubResource("RectangleShape2D_x0yos")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapBoundary"]
+position = Vector2(564, 540.5)
+shape = SubResource("RectangleShape2D_d46bt")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MapBoundary"]
+position = Vector2(1356, 541.5)
+shape = SubResource("RectangleShape2D_xqf30")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="MapBoundary"]
+position = Vector2(960, 1092)
+shape = SubResource("RectangleShape2D_krtr3")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://dbekokqy5744j"]
+[gd_scene load_steps=31 format=3 uid="uid://dbekokqy5744j"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_jpwwv"]
+[ext_resource type="Shader" path="res://Scenes/HitFlash.gdshader" id="2_2brcq"]
 [ext_resource type="Texture2D" uid="uid://ddmaxweb85cr8" path="res://Sprites/Jet_Sprite_01.png" id="2_o7k6q"]
 [ext_resource type="Texture2D" uid="uid://cgaa404ny8jae" path="res://Sprites/JetEngineFire_01.png" id="3_yeh5m"]
 [ext_resource type="Texture2D" uid="uid://bvijtf0peduy8" path="res://Sprites/JetEngineFire_02.png" id="4_rb60a"]
@@ -23,6 +24,15 @@
 [ext_resource type="PackedScene" uid="uid://dvr1ptv5elroc" path="res://Scenes/player_default_bullet_1.tscn" id="21_6hc4h"]
 [ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="22_xw0h1"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14ryl"]
+radius = 12.0
+height = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qklo1"]
+shader = ExtResource("2_2brcq")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_0825u"]
 animations = [{
 "frames": [{
@@ -36,10 +46,6 @@ animations = [{
 "name": &"default",
 "speed": 16.0
 }]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14ryl"]
-radius = 12.0
-height = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dl6jv"]
 radius = 12.0
@@ -74,16 +80,39 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlvl7"]
-_data = {
-"die": SubResource("Animation_vvkyf")
+[sub_resource type="Animation" id="Animation_cpgq0"]
+resource_name = "hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ship:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0450624, 0.240773),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
 }
 
-[node name="Player" type="Node2D"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlvl7"]
+_data = {
+"die": SubResource("Animation_vvkyf"),
+"hit": SubResource("Animation_cpgq0")
+}
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 16
 script = ExtResource("1_jpwwv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_14ryl")
 
 [node name="Ship" type="Sprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_qklo1")
 position = Vector2(0.5, 0)
 texture = ExtResource("2_o7k6q")
 
@@ -94,13 +123,6 @@ scale = Vector2(1, 0.27)
 sprite_frames = SubResource("SpriteFrames_0825u")
 autoplay = "default"
 frame_progress = 0.168045
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-visible = false
-position = Vector2(0, 5)
-shape = SubResource("CapsuleShape2D_14ryl")
 
 [node name="Powers" type="Node2D" parent="."]
 
@@ -121,7 +143,7 @@ sounds = Array[AudioStreamWAV]([ExtResource("6_b1nck"), ExtResource("7_5tukj"), 
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("18_dytp6")]
 collision_layer = 8
-collision_mask = 6
+collision_mask = 22
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
@@ -143,7 +165,7 @@ libraries = {
 visible = false
 texture = ExtResource("22_xw0h1")
 hframes = 7
-frame = 6
+frame = 2
 
 [node name="PlayerWeaponComponent" parent="." node_paths=PackedStringArray("projectile_origin", "bullets_container") instance=ExtResource("20_3x3as")]
 time_between_shots = 0.07
@@ -156,4 +178,5 @@ time_between_shots = 0.07
 projectile = ExtResource("21_6hc4h")
 projectile_origin = NodePath("../Right Gun 1")
 
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
