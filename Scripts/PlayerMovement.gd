@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 
 @export var move_speed = 150.0
@@ -33,7 +33,8 @@ func handle_movement(delta):
 	else:
 		is_moving = false
 	
-	position += direction.normalized() * move_speed * delta
+	move_and_collide(direction.normalized() * move_speed * delta)
+	
 	if is_moving:
 		flame_trail.scale.y = 1
 		flame_trail.position.y = 24
@@ -57,3 +58,7 @@ func _on_health_component_health_depleted():
 
 func die():
 	queue_free()
+
+
+func _on_health_component_damage_taken():
+	$AnimationPlayer.play('hit')

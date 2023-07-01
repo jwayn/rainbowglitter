@@ -22,6 +22,8 @@ buses/default_bus_layout=""
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=4
+window/stretch/mode="viewport"
 
 [input]
 
@@ -60,3 +62,4 @@ ui_down={
 2d_physics/layer_2="Enemy Hitboxes"
 2d_physics/layer_3="Enemy Hurtboxes"
 2d_physics/layer_4="Player Hurtbox"
+2d_physics/layer_5="Walls"
