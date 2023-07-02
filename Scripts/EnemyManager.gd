@@ -247,7 +247,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if current_index <= enemies.size() - 1:
-		if enemies[current_index]["spawn_time"] == snapped(current_time, 0.01):
+		if enemies[current_index]["spawn_time"] <= snapped(current_time, 0.01):
 			var e = enemy_types[enemies[current_index]["type"]].instantiate()
 			enemies[current_index]["parent"].add_child(e)
 			current_index += 1

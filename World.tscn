@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=29 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -9,6 +9,44 @@
 [ext_resource type="PackedScene" uid="uid://b657147n5grej" path="res://Scenes/LaserEnemy.tscn" id="6_641m7"]
 [ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="7_wkivb"]
 [ext_resource type="AudioStream" uid="uid://bm0wsp8d7144d" path="res://Audio/Massive_Squadron_Galaxy.wav" id="8_xxu1v"]
+
+[sub_resource type="Animation" id="Animation_ntj25"]
+resource_name = "star_flicker"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Layer 3:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.048931, 0.116152, 0.179572, 0.251473),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.811765), Color(1, 1, 1, 1), Color(1, 1, 1, 0.631373), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_d47vc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Layer 3:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1u0tl"]
+_data = {
+"RESET": SubResource("Animation_d47vc"),
+"star_flicker": SubResource("Animation_ntj25")
+}
 
 [sub_resource type="Curve2D" id="Curve2D_guak6"]
 _data = {
@@ -119,6 +157,7 @@ texture = ExtResource("1_aco2m")
 metadata/_edit_lock_ = true
 
 [node name="Layer 2" type="Node2D" parent="Background"]
+modulate = Color(1, 1, 1, 0.745098)
 script = ExtResource("1_3i768")
 parallax_speed = 0.5
 metadata/_edit_lock_ = true
@@ -169,6 +208,12 @@ position = Vector2(0, -539)
 scale = Vector2(2, 2)
 texture = ExtResource("4_0ehjs")
 metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background"]
+autoplay = "star_flicker"
+libraries = {
+"": SubResource("AnimationLibrary_1u0tl")
+}
 
 [node name="EnemyManager" type="Node2D" parent="."]
 position = Vector2(954, -115)

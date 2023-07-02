@@ -135,7 +135,7 @@ hframes = 7
 [node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_3gsiv")]
 origin = NodePath("../BulletPoint")
 projectile = ExtResource("8_ivrkh")
-time_between_shots = 2.0
+time_between_shots = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWeaponComponent/RangeCollider" index="0"]
 position = Vector2(391, 0)

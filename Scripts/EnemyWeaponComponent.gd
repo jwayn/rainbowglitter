@@ -6,6 +6,7 @@ extends Node2D
 @export var projectile: PackedScene
 @export var minimum_range: float
 @export var time_between_shots: float = 10
+@export var projectile_is_local = false
 
 var target: CharacterBody2D
 var is_charging: bool = false
@@ -32,5 +33,9 @@ func play_charge_animation():
 
 func instantiate_projectile():
 	var p = projectile.instantiate()
-	origin.add_child(p)
+	if projectile_is_local:
+		origin.add_child(p)
+	else:
+		$/root/World/Bullets.add_child(p)
+		p.position = to_global(origin.position)
 	p.set_target(target)

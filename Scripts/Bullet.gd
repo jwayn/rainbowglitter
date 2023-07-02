@@ -2,7 +2,6 @@ extends Node2D
 
 @export var SPEED = 250
 var direction
-var target
 var target_position
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,8 +18,7 @@ func _process(delta):
 
 func set_target(target):
 	if(is_instance_valid(target)):
-		self.target = target
-		self.target_position = Vector2(to_local(target.position))
+		self.target_position = Vector2(target.position)
 		direction = position.direction_to(target_position).normalized()
 
 func is_on_screen() -> bool:

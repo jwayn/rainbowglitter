@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_qqfx7"]
 [ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_lldq2"]
-[ext_resource type="Texture2D" uid="uid://bqwlosq544olv" path="res://Sprites/Enemy_02.png" id="3_vsidv"]
+[ext_resource type="Texture2D" uid="uid://c56o4pgi833hv" path="res://Sprites/enemy_3.png" id="3_6mgfd"]
 [ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="4_72uir"]
 [ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="5_mc6f7"]
 [ext_resource type="PackedScene" uid="uid://co6lkhclwounv" path="res://Components/enemy_weapon_component.tscn" id="7_fjpvl"]
@@ -100,7 +100,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_whrlj"]
-size = Vector2(1833, 40)
+size = Vector2(1843.5, 40)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pl42s"]
 streams_count = 3
@@ -122,10 +122,10 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_irfvh")
 rotation = -1.5708
 scale = Vector2(2, 2)
-texture = ExtResource("3_vsidv")
+texture = ExtResource("3_6mgfd")
 
 [node name="BulletPoint" type="Marker2D" parent="."]
-position = Vector2(21, 0)
+position = Vector2(14, 0)
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_72uir")]
 MAX_HEALTH = 10
@@ -154,12 +154,13 @@ hframes = 7
 [node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_fjpvl")]
 origin = NodePath("../BulletPoint")
 projectile = ExtResource("8_1hst4")
+projectile_is_local = true
 
-[node name="RangeCollider" parent="EnemyWeaponComponent" index="0"]
+[node name="RangeCollider" parent="EnemyWeaponComponent" index="1"]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWeaponComponent/RangeCollider" index="0"]
-position = Vector2(936, 0)
+position = Vector2(935.75, 0)
 shape = SubResource("RectangleShape2D_whrlj")
 
 [node name="HitConfirmSoundPlayer" parent="." instance=ExtResource("9_7uhgq")]
