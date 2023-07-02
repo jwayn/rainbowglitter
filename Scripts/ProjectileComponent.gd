@@ -31,8 +31,8 @@ func set_direction(start_position, target_position):
 		direction = start_position.direction_to(target_position).normalized()
 
 
-func _on_hitbox_component_area_entered(hurtbox: HurtboxComponent):
-	if hurtbox.get_collision_layer_value(3):
+func _on_hitbox_component_area_entered(area):
+	if area.get_collision_layer_value(3):
 		collisions += 1
 		if collisions >= max_number_of_collisions:
 			queue_free()

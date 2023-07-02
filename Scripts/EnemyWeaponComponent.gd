@@ -1,31 +1,36 @@
-class_name PlayerWeaponComponent
+class_name EnemyWeaponComponent
 extends Node2D
 
-@export var time_between_shots: float = 1
+@export var origin: Marker2D
+@export var audio_player: RandomAudioPlayerComponent
 @export var projectile: PackedScene
-@export var projectile_origin: Marker2D
-@export var bullets_container: Node2D
-@export var button_action: String = "ui_accept"
+@export var minimum_range: float
+@export var time_between_shots: float = 10
 
-var can_fire = true
+var target: CharacterBody2D
+var is_charging: bool = false
+var can_shoot: bool = true
 
 func _process(delta):
-	handle_shooting_input()
+	if target && can_shoot:
+		fire_weapon()
 
-func handle_shooting_input():
-	if Input.is_action_pressed(button_action):
-		if can_fire:
-			_fire_weapon()
+func fire_weapon():
+	can_shoot = false
+	instantiate_projectile()
+	$WeaponSpeedTimer.start(time_between_shots)
 
-func _fire_weapon():
-	if projectile:
-		var p = projectile.instantiate()
-		$/root/World/Bullets.add_child(p)
-		p.position = projectile_origin.global_position
-		can_fire = false
-		$FireTimer.start(time_between_shots)
-		$AudioPlayer.play()
-	
+func _on_range_collider_area_entered(area):
+	if area.get_collision_layer_value(4):
+		target = area.get_parent()
 
-func _on_fire_timer_timeout():
-	can_fire = true
+func _on_weapon_speed_timer_timeout():
+	can_shoot = true
+
+func play_charge_animation():
+	pass
+
+func instantiate_projectile():
+	var p = projectile.instantiate()
+	origin.add_child(p)
+	p.set_target(target)

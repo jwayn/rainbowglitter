@@ -1,3 +1,4 @@
+class_name RandomAudioPlayerComponent
 extends Node2D
 @export var sounds: Array[AudioStreamWAV]
 
@@ -5,8 +6,5 @@ extends Node2D
 func _ready():
 	for sound in sounds:
 		$AudioPlayer.stream.add_stream(-1, sound)
-func play_random_sound():
+func play():
 	$AudioPlayer.play()
-
-
-

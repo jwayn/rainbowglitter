@@ -1,12 +1,14 @@
-[gd_scene load_steps=24 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=26 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
 [ext_resource type="Texture2D" uid="uid://df2n8hdi05fhi" path="res://Sprites/Background_Black.png" id="1_aco2m"]
 [ext_resource type="Texture2D" uid="uid://cx06dw1hrd1xd" path="res://Sprites/StarLayer_Blue.png" id="2_uxot7"]
 [ext_resource type="Texture2D" uid="uid://c1267vio1vqh4" path="res://Sprites/StarLayer_RedGreen.png" id="4_0ehjs"]
-[ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="5_1smwy"]
-[ext_resource type="Script" path="res://EnemyManager.gd" id="5_me07y"]
+[ext_resource type="Script" path="res://Scripts/EnemyManager.gd" id="5_yun16"]
+[ext_resource type="PackedScene" uid="uid://b657147n5grej" path="res://Scenes/LaserEnemy.tscn" id="6_641m7"]
+[ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="7_wkivb"]
+[ext_resource type="AudioStream" uid="uid://bm0wsp8d7144d" path="res://Audio/Massive_Squadron_Galaxy.wav" id="8_xxu1v"]
 
 [sub_resource type="Curve2D" id="Curve2D_guak6"]
 _data = {
@@ -170,8 +172,8 @@ metadata/_edit_lock_ = true
 
 [node name="EnemyManager" type="Node2D" parent="."]
 position = Vector2(954, -115)
-script = ExtResource("5_me07y")
-enemy_types = Array[PackedScene]([ExtResource("5_1smwy")])
+script = ExtResource("5_yun16")
+enemy_types = Array[PackedScene]([ExtResource("6_641m7"), ExtResource("7_wkivb")])
 
 [node name="FlightPaths" type="Node2D" parent="EnemyManager"]
 position = Vector2(1, 84)
@@ -227,6 +229,7 @@ curve = SubResource("Curve2D_ujtpf")
 [node name="Player" parent="." instance=ExtResource("1_2io6t")]
 position = Vector2(965, 912)
 scale = Vector2(2, 2)
+collision_layer = 8
 move_speed = 250.0
 
 [node name="Bullets" type="Node2D" parent="."]
@@ -263,3 +266,8 @@ shape = SubResource("RectangleShape2D_xqf30")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="MapBoundary"]
 position = Vector2(960, 1092)
 shape = SubResource("RectangleShape2D_krtr3")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_xxu1v")
+autoplay = true
+bus = &"Music"

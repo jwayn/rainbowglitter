@@ -1,17 +1,21 @@
-[gd_scene load_steps=15 format=3 uid="uid://devi6hyt0i4pk"]
+[gd_scene load_steps=20 format=3 uid="uid://devi6hyt0i4pk"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_io2sp"]
+[ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_eljwn"]
 [ext_resource type="Texture2D" uid="uid://bqwlosq544olv" path="res://Sprites/Enemy_02.png" id="2_v0x05"]
-[ext_resource type="Shader" path="res://Scenes/HitFlash.gdshader" id="2_y4tey"]
 [ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="3_uknm1"]
 [ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="4_h3qp5"]
-[ext_resource type="PackedScene" uid="uid://0tqe7fc32ij6" path="res://Components/player_weapon_component.tscn" id="5_wck6l"]
-[ext_resource type="Script" path="res://Scripts/ProjectileComponent.gd" id="6_lc7th"]
+[ext_resource type="PackedScene" uid="uid://co6lkhclwounv" path="res://Components/enemy_weapon_component.tscn" id="7_3gsiv"]
 [ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="7_q3ify"]
+[ext_resource type="PackedScene" uid="uid://bvqexymn7w7q1" path="res://Scenes/Projectiles/straight_bullet.tscn" id="8_ivrkh"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="9_wrbou"]
+[ext_resource type="AudioStream" uid="uid://dfj5t5n4non1h" path="res://Audio/Explosion_01.wav" id="10_krw74"]
+[ext_resource type="AudioStream" uid="uid://e1hmur04key4" path="res://Audio/Explosion_02.wav" id="11_4qdli"]
+[ext_resource type="AudioStream" uid="uid://dgnykhkrs1oc3" path="res://Audio/Explosion_03.wav" id="12_ep6rr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_irfvh"]
 resource_local_to_scene = true
-shader = ExtResource("2_y4tey")
+shader = ExtResource("2_eljwn")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
 
@@ -87,6 +91,9 @@ _data = {
 "hit": SubResource("Animation_vx1ih")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_go7io"]
+size = Vector2(782, 587)
+
 [node name="Enemy" type="PathFollow2D"]
 lookahead = 52.762
 script = ExtResource("1_io2sp")
@@ -102,10 +109,6 @@ texture = ExtResource("2_v0x05")
 [node name="BulletPoint" type="Marker2D" parent="."]
 position = Vector2(34, 0)
 
-[node name="ShotTimer" type="Timer" parent="."]
-wait_time = 0.5
-autostart = true
-
 [node name="HealthComponent" parent="." instance=ExtResource("3_uknm1")]
 MAX_HEALTH = 10
 STARTING_HEALTH = 10
@@ -118,11 +121,6 @@ health_component = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_52kuw")
 
-[node name="PlayerWeaponComponent" parent="." instance=ExtResource("5_wck6l")]
-
-[node name="ProjectileComponent" type="Node2D" parent="."]
-script = ExtResource("6_lc7th")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_k4i2n")
@@ -134,6 +132,19 @@ scale = Vector2(2, 2)
 texture = ExtResource("7_q3ify")
 hframes = 7
 
-[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
+[node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_3gsiv")]
+origin = NodePath("../BulletPoint")
+projectile = ExtResource("8_ivrkh")
+time_between_shots = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWeaponComponent/RangeCollider" index="0"]
+position = Vector2(391, 0)
+shape = SubResource("RectangleShape2D_go7io")
+
+[node name="DeathSoundPlayer" parent="." instance=ExtResource("9_wrbou")]
+sounds = Array[AudioStreamWAV]([ExtResource("10_krw74"), ExtResource("11_4qdli"), ExtResource("12_ep6rr")])
+
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+
+[editable path="EnemyWeaponComponent"]

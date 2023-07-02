@@ -62,3 +62,7 @@ func die():
 
 func _on_health_component_damage_taken():
 	$AnimationPlayer.play('hit')
+	$HitmarkerAudio.play()
+	print("Player hit")
+	
+	

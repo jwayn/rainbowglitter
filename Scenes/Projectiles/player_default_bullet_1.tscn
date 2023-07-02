@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvr1ptv5elroc"]
+
+[ext_resource type="PackedScene" uid="uid://c3faxcfvrkly3" path="res://Components/projectile_component.tscn" id="1_b60p1"]
+[ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="2_gmygg"]
+[ext_resource type="Texture2D" uid="uid://ba4ojqm7xivhj" path="res://Sprites/Bullet_07.png" id="3_j7ejt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gsg75"]
+radius = 3.0
+height = 10.0
+
+[sub_resource type="Gradient" id="Gradient_fifrl"]
+offsets = PackedFloat32Array(0.485623, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oh7yf"]
+gradient = SubResource("Gradient_fifrl")
+
+[sub_resource type="Curve" id="Curve_mgp0s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.359375, 0.906137), 0.0, 0.0, 0, 0, Vector2(1, 0.0180506), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ildea"]
+curve = SubResource("Curve_mgp0s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h5rwh"]
+lifetime_randomness = 0.02
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+initial_velocity_max = 15.15
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ildea")
+color = Color(0, 1, 0.0705882, 1)
+color_ramp = SubResource("GradientTexture1D_oh7yf")
+
+[node name="PlayerDefaultBullet1" instance=ExtResource("1_b60p1")]
+speed = 800
+
+[node name="HitboxComponent" parent="." index="0" instance=ExtResource("2_gmygg")]
+collision_mask = 6
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_gsg75")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture_filter = 1
+texture = ExtResource("3_j7ejt")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="2"]
+position = Vector2(0, 6)
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_h5rwh")
+lifetime = 0.1
+
+[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]
