@@ -2,7 +2,11 @@
 
 importer="wav"
 type="AudioStreamWAV"
+<<<<<<< Updated upstream
 uid="uid://7abbqv7s85r7"
+=======
+uid="uid://butknv3n6ytwb"
+>>>>>>> Stashed changes
 path="res://.godot/imported/Laser_Gun_06.wav-8a5ae4c7f2135db0dc6d96bda8af871f.sample"
 
 [deps]
