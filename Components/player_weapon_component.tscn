@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://0tqe7fc32ij6"]
+[gd_scene load_steps=16 format=3 uid="uid://0tqe7fc32ij6"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerWeaponComponent.gd" id="1_w8yli"]
-[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="2_ocjjd"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="2_r0ian"]
 [ext_resource type="AudioStream" uid="uid://dffe4prny8etp" path="res://Audio/Ship_Gun_01.wav" id="3_pdq12"]
 [ext_resource type="AudioStream" uid="uid://cj2oi1youotos" path="res://Audio/Ship_Gun_02.wav" id="4_xspkw"]
 [ext_resource type="AudioStream" uid="uid://dvj1la372np24" path="res://Audio/Ship_Gun_03.wav" id="5_a6uwq"]
@@ -15,12 +15,20 @@
 [ext_resource type="AudioStream" uid="uid://cgewo75eic0et" path="res://Audio/Ship_Gun_11.wav" id="13_4hnk8"]
 [ext_resource type="AudioStream" uid="uid://bipo1t1uufx16" path="res://Audio/Ship_Gun_12.wav" id="14_wswjn"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_okv11"]
+resource_local_to_scene = true
+
 [node name="PlayerWeaponComponent" type="Node2D"]
 script = ExtResource("1_w8yli")
 
 [node name="FireTimer" type="Timer" parent="."]
 
-[node name="AudioPlayer" parent="." instance=ExtResource("2_ocjjd")]
+[node name="AudioPlayer" type="Node2D" parent="."]
+script = ExtResource("2_r0ian")
 sounds = Array[AudioStreamWAV]([ExtResource("3_pdq12"), ExtResource("4_xspkw"), ExtResource("5_a6uwq"), ExtResource("6_8h4ru"), ExtResource("7_fu1o8"), ExtResource("8_1fx6x"), ExtResource("9_yxp42"), ExtResource("10_iufov"), ExtResource("11_l36le"), ExtResource("12_34i3i"), ExtResource("13_4hnk8"), ExtResource("14_wswjn")])
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="AudioPlayer"]
+stream = SubResource("AudioStreamRandomizer_okv11")
+bus = &"Bullets"
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]

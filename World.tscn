@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=33 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -9,21 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://b657147n5grej" path="res://Scenes/LaserEnemy.tscn" id="6_641m7"]
 [ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="7_wkivb"]
 [ext_resource type="AudioStream" uid="uid://bm0wsp8d7144d" path="res://Audio/Massive_Squadron_Galaxy.wav" id="8_xxu1v"]
-
-[sub_resource type="Animation" id="Animation_d47vc"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Layer 3:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
+[ext_resource type="Shader" path="res://Fog.gdshader" id="10_8bwkp"]
+[ext_resource type="Script" path="res://Camera.gd" id="11_rey55"]
 
 [sub_resource type="Animation" id="Animation_ntj25"]
 resource_name = "star_flicker"
@@ -41,12 +28,41 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.811765), Color(1, 1, 1, 1), Color(1, 1, 1, 0.631373), Color(1, 1, 1, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Layer 2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0695541, 0.143095, 0.163917, 0.251857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.745098), Color(1, 1, 1, 0.576471), Color(1, 1, 1, 0.745098), Color(1, 1, 1, 0.290196), Color(1, 1, 1, 0.745098)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1u0tl"]
 _data = {
-"RESET": SubResource("Animation_d47vc"),
 "star_flicker": SubResource("Animation_ntj25")
 }
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_el26t"]
+seed = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_svy53"]
+invert = true
+seamless = true
+noise = SubResource("FastNoiseLite_el26t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t8rc5"]
+shader = ExtResource("10_8bwkp")
+shader_parameter/octaves = 8
+shader_parameter/starting_amplitude = 0.414
+shader_parameter/starting_frequency = 0.25
+shader_parameter/shift = -0.2
+shader_parameter/velocity = Vector2(0, 0.075)
+shader_parameter/fog_color = Color(0, 0.188235, 0.2, 1)
+shader_parameter/noise = SubResource("NoiseTexture2D_svy53")
 
 [sub_resource type="Curve2D" id="Curve2D_guak6"]
 _data = {
@@ -133,6 +149,7 @@ metadata/_edit_lock_ = true
 
 [node name="Layer 1" type="Node2D" parent="Background"]
 script = ExtResource("1_3i768")
+parallax_speed = 0.125
 metadata/_edit_lock_ = true
 
 [node name="Bg1" type="Sprite2D" parent="Background/Layer 1"]
@@ -157,9 +174,8 @@ texture = ExtResource("1_aco2m")
 metadata/_edit_lock_ = true
 
 [node name="Layer 2" type="Node2D" parent="Background"]
-modulate = Color(1, 1, 1, 0.745098)
+modulate = Color(1, 1, 1, 0.366943)
 script = ExtResource("1_3i768")
-parallax_speed = 0.5
 metadata/_edit_lock_ = true
 
 [node name="Bg1" type="Sprite2D" parent="Background/Layer 2"]
@@ -184,8 +200,9 @@ texture = ExtResource("2_uxot7")
 metadata/_edit_lock_ = true
 
 [node name="Layer 3" type="Node2D" parent="Background"]
+modulate = Color(1, 1, 1, 0.694205)
 script = ExtResource("1_3i768")
-parallax_speed = 1.25
+parallax_speed = 0.7
 metadata/_edit_lock_ = true
 
 [node name="Bg1" type="Sprite2D" parent="Background/Layer 3"]
@@ -214,6 +231,12 @@ autoplay = "star_flicker"
 libraries = {
 "": SubResource("AnimationLibrary_1u0tl")
 }
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_t8rc5")
+offset_left = 575.0
+offset_right = 1344.0
+offset_bottom = 1079.0
 
 [node name="EnemyManager" type="Node2D" parent="."]
 position = Vector2(954, -115)
@@ -282,13 +305,13 @@ move_speed = 250.0
 [node name="LR Covers" type="Node2D" parent="."]
 
 [node name="Left" type="Sprite2D" parent="LR Covers"]
-position = Vector2(288, 540)
-scale = Vector2(9, 16.875)
+position = Vector2(258, 524)
+scale = Vector2(9.9375, 22.0625)
 texture = SubResource("GradientTexture2D_sg8jp")
 
 [node name="Left2" type="Sprite2D" parent="LR Covers"]
-position = Vector2(1632, 540)
-scale = Vector2(9, 16.875)
+position = Vector2(1678, 525)
+scale = Vector2(10.4375, 21.2813)
 texture = SubResource("GradientTexture2D_ryop7")
 
 [node name="MapBoundary" type="StaticBody2D" parent="."]
@@ -316,3 +339,7 @@ shape = SubResource("RectangleShape2D_krtr3")
 stream = ExtResource("8_xxu1v")
 autoplay = true
 bus = &"Music"
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+script = ExtResource("11_rey55")

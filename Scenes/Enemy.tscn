@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://devi6hyt0i4pk"]
+[gd_scene load_steps=30 format=3 uid="uid://devi6hyt0i4pk"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_io2sp"]
 [ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_eljwn"]
@@ -12,6 +12,15 @@
 [ext_resource type="AudioStream" uid="uid://dfj5t5n4non1h" path="res://Audio/Explosion_01.wav" id="10_krw74"]
 [ext_resource type="AudioStream" uid="uid://e1hmur04key4" path="res://Audio/Explosion_02.wav" id="11_4qdli"]
 [ext_resource type="AudioStream" uid="uid://dgnykhkrs1oc3" path="res://Audio/Explosion_03.wav" id="12_ep6rr"]
+[ext_resource type="AudioStream" uid="uid://b7fqv5m21kow6" path="res://Audio/Hitmarker_01.wav" id="13_htx6w"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="13_lblqw"]
+[ext_resource type="AudioStream" uid="uid://cu88r07nsr4qs" path="res://Audio/Hitmarker_02.wav" id="14_67ypr"]
+[ext_resource type="AudioStream" uid="uid://gqjgrwxd7ste" path="res://Audio/Hitmarker_03.wav" id="15_m83gw"]
+[ext_resource type="AudioStream" uid="uid://dr8khtmvdx134" path="res://Audio/Hitmarker_04.wav" id="16_an8ut"]
+[ext_resource type="AudioStream" uid="uid://curdh4kd8w6up" path="res://Audio/Hitmarker_05.wav" id="17_42og7"]
+[ext_resource type="AudioStream" uid="uid://b01fqjebai5b3" path="res://Audio/Hitmarker_06.wav" id="18_fx2gq"]
+[ext_resource type="AudioStream" uid="uid://cg2g1ujp3hncw" path="res://Audio/Hitmarker_07.wav" id="19_nxwl4"]
+[ext_resource type="AudioStream" uid="uid://cifahvu1b01t0" path="res://Audio/Hitmarker_08.wav" id="20_e7omj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_irfvh"]
 resource_local_to_scene = true
@@ -20,8 +29,8 @@ shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
-radius = 20.4819
-height = 87.1217
+radius = 23.0
+height = 50.0
 
 [sub_resource type="Animation" id="Animation_tsykn"]
 resource_name = "Die"
@@ -94,6 +103,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_go7io"]
 size = Vector2(782, 587)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_csxiy"]
+resource_local_to_scene = true
+
 [node name="Enemy" type="PathFollow2D"]
 lookahead = 52.762
 script = ExtResource("1_io2sp")
@@ -119,7 +131,11 @@ collision_layer = 4
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(-7.24792e-05, 20)
 shape = SubResource("CapsuleShape2D_52kuw")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtboxComponent"]
+polygon = PackedVector2Array(3.00016, -43, 16, 1.00006, -16, 0.999942, -2.99984, -43)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -131,6 +147,7 @@ visible = false
 scale = Vector2(2, 2)
 texture = ExtResource("7_q3ify")
 hframes = 7
+frame = 3
 
 [node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_3gsiv")]
 origin = NodePath("../BulletPoint")
@@ -144,7 +161,17 @@ shape = SubResource("RectangleShape2D_go7io")
 [node name="DeathSoundPlayer" parent="." instance=ExtResource("9_wrbou")]
 sounds = Array[AudioStreamWAV]([ExtResource("10_krw74"), ExtResource("11_4qdli"), ExtResource("12_ep6rr")])
 
+[node name="HitConfirmSoundPlayer" type="Node2D" parent="."]
+script = ExtResource("13_lblqw")
+sounds = Array[AudioStreamWAV]([ExtResource("13_htx6w"), ExtResource("14_67ypr"), ExtResource("15_m83gw"), ExtResource("16_an8ut"), ExtResource("17_42og7"), ExtResource("18_fx2gq"), ExtResource("19_nxwl4"), ExtResource("20_e7omj")])
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="HitConfirmSoundPlayer"]
+stream = SubResource("AudioStreamRandomizer_csxiy")
+volume_db = 12.0
+bus = &"Hit Markers"
+
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+[connection signal="on_hit" from="HurtboxComponent" to="." method="_on_hurtbox_component_on_hit"]
 
 [editable path="EnemyWeaponComponent"]

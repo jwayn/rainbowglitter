@@ -149,6 +149,7 @@ sounds = Array[AudioStreamWAV]([ExtResource("6_b1nck"), ExtResource("7_5tukj"), 
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="RandomAudioPlayer"]
 stream = SubResource("AudioStreamRandomizer_bfgyo")
+bus = &"Bullets"
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("18_dytp6")]
 collision_layer = 8
@@ -160,8 +161,8 @@ position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_dl6jv")
 
 [node name="HealthComponent" parent="." instance=ExtResource("19_iihin")]
-MAX_HEALTH = 3
-STARTING_HEALTH = 3
+MAX_HEALTH = 20
+STARTING_HEALTH = 20
 
 [node name="Bullets" type="Node2D" parent="."]
 

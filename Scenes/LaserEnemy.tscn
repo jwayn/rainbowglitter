@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b657147n5grej"]
+[gd_scene load_steps=33 format=3 uid="uid://b657147n5grej"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_qqfx7"]
 [ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_lldq2"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://co6lkhclwounv" path="res://Components/enemy_weapon_component.tscn" id="7_fjpvl"]
 [ext_resource type="PackedScene" uid="uid://wm4wgf60hj6f" path="res://Scenes/Projectiles/laser_projectile.tscn" id="8_1hst4"]
 [ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="8_yk5a0"]
-[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="9_7uhgq"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="9_86j5v"]
 [ext_resource type="AudioStream" uid="uid://dfj5t5n4non1h" path="res://Audio/Explosion_01.wav" id="11_ae2qp"]
 [ext_resource type="AudioStream" uid="uid://e1hmur04key4" path="res://Audio/Explosion_02.wav" id="12_s5376"]
 [ext_resource type="AudioStream" uid="uid://dgnykhkrs1oc3" path="res://Audio/Explosion_03.wav" id="13_61oml"]
@@ -30,6 +30,9 @@ shader_parameter/flash_modifier = 0.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
 radius = 20.4819
 height = 87.1217
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7awmu"]
+size = Vector2(78, 6.99972)
 
 [sub_resource type="Animation" id="Animation_tsykn"]
 resource_name = "Die"
@@ -102,6 +105,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_whrlj"]
 size = Vector2(1843.5, 40)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7m43k"]
+resource_local_to_scene = true
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pl42s"]
 streams_count = 3
 stream_0/stream = ExtResource("11_ae2qp")
@@ -110,6 +116,15 @@ stream_1/stream = ExtResource("12_s5376")
 stream_1/weight = 1.0
 stream_2/stream = ExtResource("13_61oml")
 stream_2/weight = 1.0
+
+[sub_resource type="Gradient" id="Gradient_8vlxk"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jo2k6"]
+gradient = SubResource("Gradient_8vlxk")
+fill = 1
+fill_from = Vector2(0.502564, 0.490598)
+fill_to = Vector2(0.119658, 0.0700855)
 
 [node name="LaserEnemy" type="PathFollow2D" node_paths=PackedStringArray("hit_confirm_sound_player")]
 lookahead = 52.762
@@ -132,13 +147,16 @@ MAX_HEALTH = 10
 STARTING_HEALTH = 10
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_mc6f7")]
-visible = false
 rotation = -1.5708
 collision_layer = 4
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_52kuw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(1.00009, -25.5)
+shape = SubResource("RectangleShape2D_7awmu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -163,11 +181,23 @@ collision_layer = 2
 position = Vector2(935.75, 0)
 shape = SubResource("RectangleShape2D_whrlj")
 
-[node name="HitConfirmSoundPlayer" parent="." instance=ExtResource("9_7uhgq")]
+[node name="HitConfirmSoundPlayer" type="Node2D" parent="."]
+script = ExtResource("9_86j5v")
 sounds = Array[AudioStreamWAV]([ExtResource("13_q630h"), ExtResource("14_1m3y5"), ExtResource("15_ltnix"), ExtResource("16_n5dje"), ExtResource("17_0l2nj"), ExtResource("18_fugou"), ExtResource("19_yiw71"), ExtResource("20_5bakp")])
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="HitConfirmSoundPlayer"]
+stream = SubResource("AudioStreamRandomizer_7m43k")
+volume_db = 12.0
 
 [node name="DeathSoundPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_pl42s")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(14, -9.53674e-07)
+scale = Vector2(0.987305, 0.955962)
+color = Color(0.984314, 0.0941176, 0, 1)
+energy = 0.88
+texture = SubResource("GradientTexture2D_jo2k6")
 
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]

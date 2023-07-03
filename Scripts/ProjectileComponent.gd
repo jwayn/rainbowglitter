@@ -9,6 +9,8 @@ var collisions = 0
 var direction: Vector2
 var target_position: Vector2 = Vector2.ZERO
 
+var ready_for_delete: bool = false
+
 func _ready():
 	if targeting_type == 2 && target_position != Vector2.ZERO:
 		set_direction(position, target_position)
@@ -16,15 +18,19 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	# Straight Ahead
-	if targeting_type == 0:
-		position += -transform.y * delta * speed
-	# Lock-On
-	if targeting_type == 1:
-		set_direction(position, target_position)
+	if !ready_for_delete:
+		# Straight Ahead
+		if targeting_type == 0:
+			position += -transform.y * delta * speed
+		# Lock-On
+		if targeting_type == 1:
+			set_direction(position, target_position)
+			
+		if direction:
+			position += direction * speed * delta
 		
-	if direction:
-		position += direction * speed * delta
+	if ready_for_delete && $HitFX.emitting == false:
+		queue_free()
 
 func set_direction(start_position, target_position):
 	if start_position && target_position:
@@ -34,5 +40,11 @@ func set_direction(start_position, target_position):
 func _on_hitbox_component_area_entered(area):
 	if area.get_collision_layer_value(3):
 		collisions += 1
+		$HitFX.set_emitting(true)
 		if collisions >= max_number_of_collisions:
-			queue_free()
+			$Sprite2D.visible = false;
+			$HitboxComponent.set_deferred("monitoring", false)
+			$HitboxComponent.set_deferred("monitorable", false)
+			$GPUParticles2D.visible = false
+			ready_for_delete = true
+			

@@ -25,7 +25,7 @@ func _ready():
 		{
 			"type": 1,
 			"formation": 1,
-			"parent": p1,
+			"parent": p4,
 			"spawn_time": 0.5,
 			"item": {
 				"chance": 1,
@@ -35,7 +35,7 @@ func _ready():
 		{
 			"type": 1,
 			"formation": 1,
-			"parent": p2,
+			"parent": p3,
 			"spawn_time": 1.0,
 			"item": {
 				"chance": 1,
@@ -45,7 +45,7 @@ func _ready():
 		{
 			"type": 1,
 			"formation": 1,
-			"parent": p3,
+			"parent": p2,
 			"spawn_time": 1.5,
 			"item": {
 				"chance": 1,
@@ -55,7 +55,7 @@ func _ready():
 		{
 			"type": 0,
 			"formation": 1,
-			"parent": p4,
+			"parent": p1,
 			"spawn_time": 2.0,
 			"item": {
 				"chance": 1,
@@ -65,7 +65,7 @@ func _ready():
 		{
 			"type": 1,
 			"formation": 1,
-			"parent": p9,
+			"parent": p6,
 			"spawn_time": 4.0,
 			"item": {
 				"chance": 1,
@@ -75,7 +75,7 @@ func _ready():
 		{
 			"type": 1,
 			"formation": 1,
-			"parent": p8,
+			"parent": p7,
 			"spawn_time": 4.5,
 			"item": {
 				"chance": 1,
@@ -85,7 +85,7 @@ func _ready():
 		,{
 			"type": 1,
 			"formation": 1,
-			"parent": p7,
+			"parent": p8,
 			"spawn_time": 5.0,
 			"item": {
 				"chance": 1,
@@ -95,7 +95,7 @@ func _ready():
 		{
 			"type": 0,
 			"formation": 1,
-			"parent": p6,
+			"parent": p9,
 			"spawn_time": 5.5,
 			"item": {
 				"chance": 1,

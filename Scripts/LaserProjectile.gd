@@ -10,9 +10,9 @@ var final_target_position: Vector2
 var has_telegraphed: bool = false
 var telegraph_has_cleared: bool = false
 var laser_has_fired: bool = false
+var created_by: Enemy
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if is_telegraphing && is_instance_valid(target):
 		if !has_telegraphed:

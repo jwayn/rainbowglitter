@@ -32,10 +32,11 @@ func play_charge_animation():
 	pass
 
 func instantiate_projectile():
-	var p = projectile.instantiate()
-	if projectile_is_local:
-		origin.add_child(p)
-	else:
-		$/root/World/Bullets.add_child(p)
-		p.position = to_global(origin.position)
-	p.set_target(target)
+	if is_instance_valid(target):
+		var p = projectile.instantiate()
+		if projectile_is_local:
+			origin.add_child(p)
+		else:
+			$/root/World/Bullets.add_child(p)
+			p.position = to_global(origin.position)
+		p.set_target(target)
