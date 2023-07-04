@@ -60,7 +60,7 @@ shader_parameter/octaves = 8
 shader_parameter/starting_amplitude = 0.414
 shader_parameter/starting_frequency = 0.25
 shader_parameter/shift = -0.2
-shader_parameter/velocity = Vector2(0, 0.075)
+shader_parameter/velocity = Vector2(0, -0.075)
 shader_parameter/fog_color = Color(0, 0.188235, 0.2, 1)
 shader_parameter/noise = SubResource("NoiseTexture2D_svy53")
 
@@ -174,7 +174,7 @@ texture = ExtResource("1_aco2m")
 metadata/_edit_lock_ = true
 
 [node name="Layer 2" type="Node2D" parent="Background"]
-modulate = Color(1, 1, 1, 0.366943)
+modulate = Color(1, 1, 1, 0.745098)
 script = ExtResource("1_3i768")
 metadata/_edit_lock_ = true
 
@@ -200,7 +200,6 @@ texture = ExtResource("2_uxot7")
 metadata/_edit_lock_ = true
 
 [node name="Layer 3" type="Node2D" parent="Background"]
-modulate = Color(1, 1, 1, 0.694205)
 script = ExtResource("1_3i768")
 parallax_speed = 0.7
 metadata/_edit_lock_ = true

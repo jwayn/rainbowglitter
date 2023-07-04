@@ -1,0 +1,367 @@
+[gd_scene load_steps=24 format=3 uid="uid://bgagrax4a664b"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_gonyr"]
+[ext_resource type="Texture2D" uid="uid://b2vh4a6egxl3l" path="res://Sprites/UI/msg_logo_red_line.png" id="2_y1gc2"]
+[ext_resource type="Texture2D" uid="uid://tm337ydf6pg1" path="res://Sprites/UI/msg_logo_orange_line.png" id="3_3h343"]
+[ext_resource type="Texture2D" uid="uid://b61m3xfogeyrp" path="res://Sprites/UI/msg_start_default.png" id="3_s47mq"]
+[ext_resource type="Texture2D" uid="uid://otwp03ucxie4" path="res://Sprites/UI/msg_start_pressed.png" id="4_3enfj"]
+[ext_resource type="Texture2D" uid="uid://cyiqskb41ykm3" path="res://Sprites/UI/msg_logo_yellow_line.png" id="4_ynelm"]
+[ext_resource type="Texture2D" uid="uid://b0t0h7gmtkjsf" path="res://Sprites/UI/msg_quit_default.png" id="5_3feox"]
+[ext_resource type="Texture2D" uid="uid://prp8k0bj4b26" path="res://Sprites/UI/msg_logo_blue_line.png" id="5_en3hd"]
+[ext_resource type="Texture2D" uid="uid://dng1jp1y3lbop" path="res://Sprites/UI/msg_quit_pressed.png" id="6_ct1ws"]
+[ext_resource type="Texture2D" uid="uid://ckqwyfhmqd87q" path="res://Sprites/UI/msg_logo_outline.png" id="6_lsda6"]
+[ext_resource type="Texture2D" uid="uid://chdmci3lt2hn6" path="res://Sprites/UI/msg_white_circle.png" id="7_c8ya6"]
+[ext_resource type="Texture2D" uid="uid://c61l1qmas444d" path="res://Sprites/UI/msg_settings_default.png" id="7_f0ogo"]
+[ext_resource type="Texture2D" uid="uid://bgblkxh8p1v8g" path="res://Sprites/UI/msg_settings_pressed.png" id="8_l8o2m"]
+[ext_resource type="Texture2D" uid="uid://mbgogbw4pnvk" path="res://Sprites/Texture1x1.png" id="14_hbrgy"]
+[ext_resource type="Texture2D" uid="uid://b5chyralboimt" path="res://Sprites/hit_sheet.png" id="15_3bmx6"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x7167"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vp1jl"]
+
+[sub_resource type="Animation" id="Animation_xj8av"]
+resource_name = "glean"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.397648, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(625, 1107), Vector2(1264, -32.0001), Vector2(1264, -32.0001)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_sdodj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1223, -5.00012)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlcim"]
+_data = {
+"RESET": SubResource("Animation_sdodj"),
+"glean": SubResource("Animation_xj8av")
+}
+
+[sub_resource type="Animation" id="Animation_71t2i"]
+resource_name = "sparkle"
+length = 0.23
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sparkle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.054304, 0.100577, 0.142366, 0.180716),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sparkle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.218755),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.223633),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_sparkle_timer"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_pi5o5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sparkle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sparkle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rewuj"]
+_data = {
+"RESET": SubResource("Animation_pi5o5"),
+"sparkle": SubResource("Animation_71t2i")
+}
+
+[node name="Menu" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gonyr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+light_mask = 0
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.160784, 0.145098, 0.188235, 1)
+
+[node name="RedLine" type="TextureRect" parent="."]
+material = SubResource("CanvasItemMaterial_x7167")
+layout_mode = 0
+offset_left = 663.0
+offset_right = 1372.0
+offset_bottom = 1080.0
+texture = ExtResource("2_y1gc2")
+stretch_mode = 4
+
+[node name="OrangeLine" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 639.0
+offset_right = 1348.0
+offset_bottom = 1080.0
+texture = ExtResource("3_3h343")
+stretch_mode = 4
+
+[node name="YellowLine" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 615.0
+offset_right = 1324.0
+offset_bottom = 1080.0
+texture = ExtResource("4_ynelm")
+stretch_mode = 4
+
+[node name="BlueLine" type="TextureRect" parent="."]
+material = SubResource("CanvasItemMaterial_vp1jl")
+layout_mode = 0
+offset_left = 591.0
+offset_right = 1300.0
+offset_bottom = 1080.0
+texture = ExtResource("5_en3hd")
+stretch_mode = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+light_mask = 0
+layout_mode = 2
+offset_left = 536.0
+offset_right = 929.0
+offset_bottom = 539.0
+scale = Vector2(2, 2)
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer2"]
+light_mask = 0
+layout_mode = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="VBoxContainer2/MarginContainer2"]
+light_mask = 0
+layout_mode = 2
+vertical = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer2/MarginContainer2/BoxContainer"]
+light_mask = 0
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_lsda6")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2"]
+light_mask = 0
+layout_mode = 2
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="BoxContainer" type="BoxContainer" parent="VBoxContainer2/MarginContainer"]
+light_mask = 0
+layout_mode = 2
+vertical = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer2/MarginContainer/BoxContainer"]
+light_mask = 0
+layout_mode = 2
+texture = ExtResource("7_c8ya6")
+stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+light_mask = 0
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Play" type="TextureButton" parent="VBoxContainer2/VBoxContainer"]
+light_mask = 0
+layout_mode = 2
+texture_normal = ExtResource("3_s47mq")
+texture_pressed = ExtResource("4_3enfj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/VBoxContainer"]
+light_mask = 0
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Quit" type="TextureButton" parent="VBoxContainer2/VBoxContainer/HBoxContainer"]
+light_mask = 0
+layout_mode = 2
+texture_normal = ExtResource("5_3feox")
+texture_pressed = ExtResource("6_ct1ws")
+
+[node name="Options" type="TextureButton" parent="VBoxContainer2/VBoxContainer/HBoxContainer"]
+light_mask = 0
+layout_mode = 2
+texture_normal = ExtResource("7_f0ogo")
+texture_pressed = ExtResource("8_l8o2m")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(1223, -5.00012)
+rotation = 0.497419
+scale = Vector2(388.25, 6.46)
+texture = ExtResource("14_hbrgy")
+
+[node name="ShineAnimation" type="AnimationPlayer" parent="."]
+autoplay = "glean"
+libraries = {
+"": SubResource("AnimationLibrary_xlcim")
+}
+
+[node name="sparkle" type="Sprite2D" parent="."]
+position = Vector2(1289, 206)
+scale = Vector2(2, 2)
+texture = ExtResource("15_3bmx6")
+hframes = 5
+frame = 2
+
+[node name="MSGSparkles" type="AnimationPlayer" parent="."]
+autoplay = "sparkle"
+libraries = {
+"": SubResource("AnimationLibrary_rewuj")
+}
+
+[node name="sparkle_markers" type="Node" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1289, 206)
+
+[node name="Marker2D2" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(870, 253)
+
+[node name="Marker2D3" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(955, 147)
+
+[node name="Marker2D4" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(635, 87)
+
+[node name="Marker2D5" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(786, 133)
+
+[node name="Marker2D6" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1140, 173)
+
+[node name="Marker2D7" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(827, 172)
+
+[node name="Marker2D8" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1020, 88)
+
+[node name="Marker2D9" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1023, 242)
+
+[node name="Marker2D10" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(959, 236)
+
+[node name="Marker2D11" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1122, 238)
+
+[node name="Marker2D12" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1171, 214)
+
+[node name="Marker2D13" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1243, 151)
+
+[node name="Marker2D14" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1163, 183)
+
+[node name="Marker2D15" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(1054, 158)
+
+[node name="Marker2D16" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(921, 191)
+
+[node name="Marker2D17" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(721, 153)
+
+[node name="Marker2D18" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(904, 99)
+
+[node name="Marker2D19" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(860, 110)
+
+[node name="Marker2D20" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(777, 89)
+
+[node name="Marker2D21" type="Marker2D" parent="sparkle_markers"]
+position = Vector2(684, 115)
+
+[node name="sparkle_timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 3.0
+one_shot = true
+
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="VBoxContainer2/VBoxContainer/HBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="timeout" from="sparkle_timer" to="." method="_on_sparkle_timer_timeout"]
