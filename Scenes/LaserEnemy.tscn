@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b657147n5grej"]
+[gd_scene load_steps=34 format=3 uid="uid://b657147n5grej"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_qqfx7"]
 [ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_lldq2"]
@@ -95,10 +95,15 @@ tracks/0/keys = {
 "values": [0.0, 1.0, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_e38w0"]
+resource_name = "charge_laser"
+length = 0.3
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
 _data = {
 "Die": SubResource("Animation_tsykn"),
 "RESET": SubResource("Animation_oafv2"),
+"charge_laser": SubResource("Animation_e38w0"),
 "hit": SubResource("Animation_vx1ih")
 }
 
@@ -147,6 +152,7 @@ MAX_HEALTH = 10
 STARTING_HEALTH = 10
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_mc6f7")]
+visible = false
 rotation = -1.5708
 collision_layer = 4
 health_component = NodePath("../HealthComponent")
@@ -170,6 +176,7 @@ texture = ExtResource("8_yk5a0")
 hframes = 7
 
 [node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_fjpvl")]
+visible = false
 origin = NodePath("../BulletPoint")
 projectile = ExtResource("8_1hst4")
 projectile_is_local = true

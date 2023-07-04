@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://wm4wgf60hj6f"]
+[gd_scene load_steps=13 format=3 uid="uid://wm4wgf60hj6f"]
 
 [ext_resource type="Script" path="res://Scripts/LaserProjectile.gd" id="1_fna8v"]
 [ext_resource type="Texture2D" uid="uid://cdcl36x1s34cs" path="res://Sprites/LaserShotFrame1.png" id="2_54cq7"]
 [ext_resource type="Texture2D" uid="uid://dwc4pgtdqqqsw" path="res://Sprites/LaserShotFrame2.png" id="3_u4qqk"]
 [ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="4_sa8xr"]
+[ext_resource type="Texture2D" uid="uid://bfk1kklbka60v" path="res://Sprites/Laser_Charge_Animation.png" id="5_olvi5"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_5ha3k"]
 frames = 2
@@ -76,10 +77,57 @@ tracks/1/keys = {
 "values": [Color(0.258824, 1, 0.572549, 1), Color(0.258824, 1, 0.572549, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_cnhcu"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_oibqt"]
+resource_name = "force_pull"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ForcePullAnimation:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.43024e-05, 0.0506932, 0.100935, 0.149616, 0.201031),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ForcePullAnimation:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.246937),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.45),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire_laser"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_md1c5"]
 _data = {
 "FadeLaserOut": SubResource("Animation_q1gb5"),
-"FadeTelegraphOut": SubResource("Animation_44vla")
+"FadeTelegraphOut": SubResource("Animation_44vla"),
+"RESET": SubResource("Animation_cnhcu"),
+"force_pull": SubResource("Animation_oibqt")
 }
 
 [node name="LaserProjectile" type="Node2D"]
@@ -89,6 +137,7 @@ script = ExtResource("1_fna8v")
 one_shot = true
 
 [node name="Laser" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.362577)
 texture_filter = 1
 texture_repeat = 2
 texture = SubResource("AnimatedTexture_5ha3k")
@@ -112,10 +161,18 @@ libraries = {
 [node name="Telegraph" type="Line2D" parent="."]
 points = PackedVector2Array(11, 2)
 width = 2.0
-default_color = Color(0.258824, 1, 0.572549, 1)
+default_color = Color(0.258824, 1, 0.572549, 0)
 
 [node name="LaserPersistence" type="Timer" parent="."]
 one_shot = true
+
+[node name="ForcePullAnimation" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("5_olvi5")
+hframes = 11
+frame = 5
 
 [connection signal="timeout" from="TelegraphTimer" to="." method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="LaserPersistence" to="." method="_on_laser_persistence_timeout"]

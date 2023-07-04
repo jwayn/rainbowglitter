@@ -1,33 +1,37 @@
 extends Node2D
 
-@export var charge_time: float = 1
+@export var telegraph_time: float = 1
 @export var laser_persistance = .25
 
-var is_telegraphing: bool = true
+var telegraph_timer_started: bool = false
+var has_telegraphed: bool = false
+var has_final_target: bool = false
+var has_force_pull_completed: bool = false
 var target: CharacterBody2D
 var direction: Vector2
 var final_target_position: Vector2
-var has_telegraphed: bool = false
-var telegraph_has_cleared: bool = false
 var laser_has_fired: bool = false
 var created_by: Enemy
 
+func _ready():
+	print("Target acquired. laser instantiated.")
 
 func _process(delta):
-	if is_telegraphing && is_instance_valid(target):
-		if !has_telegraphed:
-			has_telegraphed = true
-			$TelegraphTimer.start(charge_time)
-		# If either telegraph or lasers are fading, they should be following 
-		# the final target position rather than the player
-		elif $AnimationPlayer.is_playing():
-			draw_telegraph_line(to_local(final_target_position))
-		# If no animations are playing but the timer has started,
-		# just follow the target's current position
-		else:
-			draw_telegraph_line(to_local(target.global_position))
+	if !telegraph_timer_started && !has_telegraphed && is_instance_valid(target):
+		telegraph_timer_started = true
+		# calls _on_charge_timer_timeout()
+		print("Starting the telegraph timer.")
+		$TelegraphTimer.start(telegraph_time)
 
-	else:
+	if !has_telegraphed && !has_final_target:
+		print("We should be drawing the telegraph line to the player's position")
+		draw_telegraph_line(to_local(target.global_position))
+
+	elif !has_telegraphed && has_final_target:
+		print("We should be drawing the telegraph line to the final position")
+		draw_telegraph_line(to_local(final_target_position))
+
+	elif has_telegraphed && has_force_pull_completed:
 		draw_laser()
 	
 func draw_telegraph_line(target_pos):
@@ -44,20 +48,21 @@ func get_direction(from, to):
 	return (from - to).normalized()
 
 func _on_charge_timer_timeout():
+	print("Telegraph time over, fading out")
 	if(is_instance_valid(target)):
+		has_final_target = true
 		final_target_position = Vector2(target.global_position)
+	# Animation calls clear_telegraph()
 	$AnimationPlayer.play("FadeTelegraphOut")
-	
+
 func clear_telegraph():
-	if !telegraph_has_cleared:
-		telegraph_has_cleared = true
-		is_telegraphing = false
-		$Telegraph.clear_points()
-		$LaserPersistence.start(laser_persistance)
-		$Laser/HitboxComponent/CollisionShape2D.disabled = false
-	
-	
-	
+	print("Fade out animation over, playing force pull")
+	$Telegraph.clear_points()
+	has_telegraphed = true
+	# Animation calls fire_laser()
+	$AnimationPlayer.play("force_pull")
+
+# draws the actual laser line
 func draw_laser():
 	$Laser.clear_points()
 	$Laser.add_point(self.position)
@@ -65,13 +70,21 @@ func draw_laser():
 	$Laser.add_point(pos + (pos * -1920))
 	if !laser_has_fired:
 		create_hitbox()
-	
+
+func fire_laser():
+	has_force_pull_completed = true
+	print("Force pull done, firing laser")
+	# Timer calls _on_laser_persistence_timeout()
+	$LaserPersistence.start(laser_persistance)
+	$Laser/HitboxComponent/CollisionShape2D.disabled = false
 
 func _on_laser_persistence_timeout():
+	print("Laser done, fading it out")
 	laser_has_fired = true
 	$Laser/HitboxComponent/CollisionShape2D.disabled = true
 	$AnimationPlayer.play("FadeLaserOut")
 
+# Creates the laser hitbox and positions it correctly
 func create_hitbox():
 	for i in $Laser.points.size() - 1:
 		var shape = $Laser/HitboxComponent/CollisionShape2D.get_shape()
@@ -81,4 +94,5 @@ func create_hitbox():
 		shape.extents = Vector2(length / 2, 10)
 
 func remove_laser():
+	print("Laser fade out done, destroying")
 	queue_free()
