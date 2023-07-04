@@ -11,7 +11,6 @@ var target: CharacterBody2D
 var direction: Vector2
 var final_target_position: Vector2
 var laser_has_fired: bool = false
-var created_by: Enemy
 
 func _ready():
 	print("Target acquired. laser instantiated.")
