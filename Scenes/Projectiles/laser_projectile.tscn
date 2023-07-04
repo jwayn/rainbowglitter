@@ -1,11 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://wm4wgf60hj6f"]
+[gd_scene load_steps=21 format=3 uid="uid://wm4wgf60hj6f"]
 
 [ext_resource type="Script" path="res://Scripts/LaserProjectile.gd" id="1_fna8v"]
 [ext_resource type="Texture2D" uid="uid://cdcl36x1s34cs" path="res://Sprites/LaserShotFrame1.png" id="2_54cq7"]
 [ext_resource type="Texture2D" uid="uid://dwc4pgtdqqqsw" path="res://Sprites/LaserShotFrame2.png" id="3_u4qqk"]
 [ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="4_sa8xr"]
 [ext_resource type="Texture2D" uid="uid://bfk1kklbka60v" path="res://Sprites/Laser_Charge_Animation.png" id="5_olvi5"]
-[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="6_sqmav"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="6_7ohvs"]
 [ext_resource type="AudioStream" uid="uid://blhvq8f4apo5e" path="res://Audio/Laser_Gun_01.wav" id="7_ttwdm"]
 [ext_resource type="AudioStream" uid="uid://8u0krhdwa20d" path="res://Audio/Laser_Gun_02.wav" id="8_tdyui"]
 [ext_resource type="AudioStream" uid="uid://bgu86x8s58ngy" path="res://Audio/Laser_Gun_03.wav" id="9_bqtlh"]
@@ -137,6 +137,9 @@ _data = {
 "force_pull": SubResource("Animation_oibqt")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_on0m1"]
+resource_local_to_scene = true
+
 [node name="LaserProjectile" type="Node2D"]
 script = ExtResource("1_fna8v")
 
@@ -181,8 +184,14 @@ texture = ExtResource("5_olvi5")
 hframes = 11
 frame = 5
 
-[node name="LaserSound" parent="." instance=ExtResource("6_sqmav")]
+[node name="LaserSound" type="Node2D" parent="."]
+script = ExtResource("6_7ohvs")
 sounds = Array[AudioStreamWAV]([ExtResource("7_ttwdm"), ExtResource("8_tdyui"), ExtResource("9_bqtlh"), ExtResource("10_4wsq2"), ExtResource("11_2jqyy"), ExtResource("12_bllav")])
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="LaserSound"]
+stream = SubResource("AudioStreamRandomizer_on0m1")
+volume_db = 6.0
+bus = &"Laser Guns"
 
 [connection signal="timeout" from="TelegraphTimer" to="." method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="LaserPersistence" to="." method="_on_laser_persistence_timeout"]
