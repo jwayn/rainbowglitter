@@ -79,6 +79,10 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_e38w0"]
+resource_name = "charge_laser"
+length = 0.3
+
 [sub_resource type="Animation" id="Animation_vx1ih"]
 resource_name = "hit"
 length = 0.12
@@ -94,10 +98,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 1.0, 0.0]
 }
-
-[sub_resource type="Animation" id="Animation_e38w0"]
-resource_name = "charge_laser"
-length = 0.3
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
 _data = {

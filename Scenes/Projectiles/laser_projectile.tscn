@@ -1,10 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://wm4wgf60hj6f"]
+[gd_scene load_steps=20 format=3 uid="uid://wm4wgf60hj6f"]
 
 [ext_resource type="Script" path="res://Scripts/LaserProjectile.gd" id="1_fna8v"]
 [ext_resource type="Texture2D" uid="uid://cdcl36x1s34cs" path="res://Sprites/LaserShotFrame1.png" id="2_54cq7"]
 [ext_resource type="Texture2D" uid="uid://dwc4pgtdqqqsw" path="res://Sprites/LaserShotFrame2.png" id="3_u4qqk"]
 [ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="4_sa8xr"]
 [ext_resource type="Texture2D" uid="uid://bfk1kklbka60v" path="res://Sprites/Laser_Charge_Animation.png" id="5_olvi5"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="6_sqmav"]
+[ext_resource type="AudioStream" uid="uid://blhvq8f4apo5e" path="res://Audio/Laser_Gun_01.wav" id="7_ttwdm"]
+[ext_resource type="AudioStream" uid="uid://8u0krhdwa20d" path="res://Audio/Laser_Gun_02.wav" id="8_tdyui"]
+[ext_resource type="AudioStream" uid="uid://bgu86x8s58ngy" path="res://Audio/Laser_Gun_03.wav" id="9_bqtlh"]
+[ext_resource type="AudioStream" uid="uid://sd8iwhgbq0tm" path="res://Audio/Laser_Gun_04.wav" id="10_4wsq2"]
+[ext_resource type="AudioStream" uid="uid://cmmytnwmalfie" path="res://Audio/Laser_Gun_05.wav" id="11_2jqyy"]
+[ext_resource type="AudioStream" uid="uid://crfusslkoam7t" path="res://Audio/Laser_Gun_06.wav" id="12_bllav"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_5ha3k"]
 frames = 2
@@ -173,6 +180,9 @@ scale = Vector2(4, 4)
 texture = ExtResource("5_olvi5")
 hframes = 11
 frame = 5
+
+[node name="LaserSound" parent="." instance=ExtResource("6_sqmav")]
+sounds = Array[AudioStreamWAV]([ExtResource("7_ttwdm"), ExtResource("8_tdyui"), ExtResource("9_bqtlh"), ExtResource("10_4wsq2"), ExtResource("11_2jqyy"), ExtResource("12_bllav")])
 
 [connection signal="timeout" from="TelegraphTimer" to="." method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="LaserPersistence" to="." method="_on_laser_persistence_timeout"]

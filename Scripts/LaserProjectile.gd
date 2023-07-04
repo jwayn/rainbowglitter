@@ -75,6 +75,7 @@ func fire_laser():
 	print("Force pull done, firing laser")
 	# Timer calls _on_laser_persistence_timeout()
 	$LaserPersistence.start(laser_persistance)
+	$LaserSound.play()
 	$Laser/HitboxComponent/CollisionShape2D.disabled = false
 
 func _on_laser_persistence_timeout():
