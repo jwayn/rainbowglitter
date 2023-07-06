@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Retro 19xx"
 run/main_scene="res://menu.tscn"
-config/features=PackedStringArray("4.0", "Forward Plus")
+config/features=PackedStringArray("4.1", "Forward Plus")
 
 [audio]
 
