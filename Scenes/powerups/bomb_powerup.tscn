@@ -1,0 +1,126 @@
+[gd_scene load_steps=13 format=3 uid="uid://dkh7hxccj76n2"]
+
+[ext_resource type="Script" path="res://Powerup.gd" id="1_vv511"]
+[ext_resource type="Texture2D" uid="uid://oydleafauhon" path="res://Sprites/bomb.png" id="2_nond5"]
+[ext_resource type="Texture2D" uid="uid://qxd01m0jab1l" path="res://Sprites/bomb-flame.png" id="3_gwknv"]
+[ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="4_ejrq3"]
+[ext_resource type="AudioStream" uid="uid://dd6thsykx0mi7" path="res://Audio/Hitmarker Sound.wav" id="5_qmw55"]
+
+[sub_resource type="Animation" id="Animation_mbm8y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_h76qn"]
+resource_name = "rotate"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wtoqk"]
+_data = {
+"RESET": SubResource("Animation_mbm8y"),
+"rotate": SubResource("Animation_h76qn")
+}
+
+[sub_resource type="Animation" id="Animation_oe1ge"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/BombFlame:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yd33c"]
+resource_name = "bomb_flame"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/BombFlame:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0500335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c5fxx"]
+_data = {
+"RESET": SubResource("Animation_oe1ge"),
+"bomb_flame": SubResource("Animation_yd33c")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tevp6"]
+radius = 5.5
+height = 11.0
+
+[node name="BombPowerup" type="Node2D"]
+texture_filter = 1
+position = Vector2(737, 838)
+scale = Vector2(2, 2)
+script = ExtResource("1_vv511")
+type = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_nond5")
+
+[node name="BombFlame" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(0, 5.5)
+texture = ExtResource("3_gwknv")
+hframes = 2
+
+[node name="Rotator" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+autoplay = "rotate"
+libraries = {
+"": SubResource("AnimationLibrary_wtoqk")
+}
+
+[node name="FlameAnimator" type="AnimationPlayer" parent="."]
+autoplay = "bomb_flame"
+libraries = {
+"": SubResource("AnimationLibrary_c5fxx")
+}
+
+[node name="PickupArea" parent="." instance=ExtResource("4_ejrq3")]
+collision_layer = 32
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CapsuleShape2D_tevp6")
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qmw55")
+
+[connection signal="area_shape_entered" from="PickupArea" to="." method="_on_pickup_area_area_shape_entered"]

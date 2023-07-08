@@ -1,19 +1,25 @@
 extends CharacterBody2D
 
+const MAX_GUNS = 4
 
 @export var move_speed = 150.0
+@export var max_bombs: int  = 3
+@export_range(0, MAX_GUNS) var num_active_guns = 1
+
+@onready var left_gun_1 = $"Left Gatling Gun"
+@onready var right_gun_1 = $"Right Gatling Gun"
+@onready var left_gun_2 = $"Left Gatling Gun2"
+@onready var right_gun_2 = $"Right Gatling Gun2"
+@onready var guns = [left_gun_1, right_gun_1, left_gun_2, right_gun_2,]
+
 var is_moving = false
 var flame_trail
-var base_bullet
-
-var left_gun_1
-var right_gun_1
-
 var is_dead: bool = false
 
 
 func _ready():
 	flame_trail = $Ship/AnimatedSprite2D
+	
 
 func handle_movement(delta):
 	# Creates a variable to store our movement direction in
@@ -43,8 +49,6 @@ func handle_movement(delta):
 		flame_trail.position.y = 18.709
 
 func _physics_process(delta):
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	if !is_dead:
 		handle_movement(delta)
 
@@ -63,6 +67,21 @@ func die():
 func _on_health_component_damage_taken():
 	$AnimationPlayer.play('hit')
 	$HitmarkerAudio.play()
-	print("Player hit")
-	
-	
+
+
+func _on_powerup_picker_upper_area_entered(area):
+	var pickup_type = area.get_parent().type
+	match(pickup_type):
+		0:
+			activate_next_gun()
+		1:
+			pickup_bomb()
+
+func pickup_bomb():
+	if $"Bomb Gun".ammo < max_bombs:
+		$"Bomb Gun".set_ammo($"Bomb Gun".ammo + 1)
+
+func activate_next_gun():
+	if num_active_guns < MAX_GUNS:
+		num_active_guns += 1
+		guns[num_active_guns - 1].active = true

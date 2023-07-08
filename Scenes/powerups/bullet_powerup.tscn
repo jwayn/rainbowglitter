@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://cks66fviryudj"]
+
+[ext_resource type="Script" path="res://Powerup.gd" id="1_txpws"]
+[ext_resource type="Texture2D" uid="uid://ba4ojqm7xivhj" path="res://Sprites/Bullet_07.png" id="2_s64yp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q6s0k"]
+radius = 14.0357
+
+[sub_resource type="Animation" id="Animation_fmm4s"]
+resource_name = "bullet_spin"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_4xioa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l18ln"]
+_data = {
+"RESET": SubResource("Animation_4xioa"),
+"bullet_spin": SubResource("Animation_fmm4s")
+}
+
+[node name="BulletPowerup" type="Node2D"]
+position = Vector2(990, 566)
+script = ExtResource("1_txpws")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_s64yp")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_q6s0k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "bullet_spin"
+libraries = {
+"": SubResource("AnimationLibrary_l18ln")
+}
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+volume_db = -11.992
+
+[connection signal="area_shape_entered" from="PickupArea" to="." method="_on_pickup_area_area_shape_entered"]

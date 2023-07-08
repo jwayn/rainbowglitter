@@ -1,16 +1,17 @@
-[gd_scene load_steps=33 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=34 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
 [ext_resource type="Texture2D" uid="uid://df2n8hdi05fhi" path="res://Sprites/Background_Black.png" id="1_aco2m"]
 [ext_resource type="Texture2D" uid="uid://cx06dw1hrd1xd" path="res://Sprites/StarLayer_Blue.png" id="2_uxot7"]
 [ext_resource type="Texture2D" uid="uid://c1267vio1vqh4" path="res://Sprites/StarLayer_RedGreen.png" id="4_0ehjs"]
+[ext_resource type="Shader" path="res://Scripts/Fog.gdshader" id="5_a06u4"]
 [ext_resource type="Script" path="res://Scripts/EnemyManager.gd" id="5_yun16"]
 [ext_resource type="PackedScene" uid="uid://b657147n5grej" path="res://Scenes/LaserEnemy.tscn" id="6_641m7"]
 [ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="7_wkivb"]
 [ext_resource type="AudioStream" uid="uid://bm0wsp8d7144d" path="res://Audio/Massive_Squadron_Galaxy.wav" id="8_xxu1v"]
-[ext_resource type="Shader" path="res://Fog.gdshader" id="10_8bwkp"]
 [ext_resource type="Script" path="res://Camera.gd" id="11_rey55"]
+[ext_resource type="PackedScene" uid="uid://dkh7hxccj76n2" path="res://Scenes/powerups/bomb_powerup.tscn" id="12_h7c1k"]
 
 [sub_resource type="Animation" id="Animation_ntj25"]
 resource_name = "star_flicker"
@@ -55,12 +56,12 @@ seamless = true
 noise = SubResource("FastNoiseLite_el26t")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t8rc5"]
-shader = ExtResource("10_8bwkp")
+shader = ExtResource("5_a06u4")
 shader_parameter/octaves = 8
 shader_parameter/starting_amplitude = 0.414
 shader_parameter/starting_frequency = 0.25
 shader_parameter/shift = -0.2
-shader_parameter/velocity = Vector2(0, -0.075)
+shader_parameter/velocity = Vector2(0, -0.125)
 shader_parameter/fog_color = Color(0, 0.188235, 0.2, 1)
 shader_parameter/noise = SubResource("NoiseTexture2D_svy53")
 
@@ -119,7 +120,7 @@ _data = {
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_n5row"]
-colors = PackedColorArray(0, 0, 0, 1, 0.0627451, 0.0941176, 0.219608, 1)
+colors = PackedColorArray(0.0117647, 0.0235294, 0.0509804, 1, 0, 0.0990065, 0.182491, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sg8jp"]
 gradient = SubResource("Gradient_n5row")
@@ -231,7 +232,7 @@ libraries = {
 "": SubResource("AnimationLibrary_1u0tl")
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Fog" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_t8rc5")
 offset_left = 575.0
 offset_right = 1344.0
@@ -342,3 +343,6 @@ bus = &"Music"
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("11_rey55")
+
+[node name="BombPowerup" parent="." instance=ExtResource("12_h7c1k")]
+position = Vector2(964, 761)

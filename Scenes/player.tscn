@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dbekokqy5744j"]
+[gd_scene load_steps=35 format=3 uid="uid://dbekokqy5744j"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.gd" id="1_jpwwv"]
 [ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_2brcq"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="22_xw0h1"]
 [ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="24_52o5h"]
 [ext_resource type="AudioStream" uid="uid://cuchjwubbs7pb" path="res://Audio/Hitmarker_Sound.wav" id="24_dhq0w"]
+[ext_resource type="PackedScene" uid="uid://dxxdx32akd0ar" path="res://Scenes/Projectiles/bomb_projectile.tscn" id="25_l0tkh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14ryl"]
 radius = 12.0
@@ -105,6 +106,10 @@ _data = {
 "hit": SubResource("Animation_cpgq0")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gkwtn"]
+radius = 13.0
+height = 40.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 16
 script = ExtResource("1_jpwwv")
@@ -142,6 +147,7 @@ position = Vector2(7, -7)
 position = Vector2(11, 0)
 
 [node name="Middle Gun" type="Marker2D" parent="."]
+position = Vector2(0, -19)
 
 [node name="RandomAudioPlayer" type="Node2D" parent="."]
 script = ExtResource("24_52o5h")
@@ -182,11 +188,23 @@ time_between_shots = 0.07
 projectile = ExtResource("21_6hc4h")
 projectile_origin = NodePath("../Left Gun 1")
 bullets_container = NodePath("../Bullets")
+active = true
+
+[node name="Left Gatling Gun2" parent="." node_paths=PackedStringArray("projectile_origin", "bullets_container") instance=ExtResource("20_3x3as")]
+time_between_shots = 0.07
+projectile = ExtResource("21_6hc4h")
+projectile_origin = NodePath("../Left Gun 2")
+bullets_container = NodePath("../Bullets")
 
 [node name="Right Gatling Gun" parent="." node_paths=PackedStringArray("projectile_origin") instance=ExtResource("20_3x3as")]
 time_between_shots = 0.07
 projectile = ExtResource("21_6hc4h")
 projectile_origin = NodePath("../Right Gun 1")
+
+[node name="Right Gatling Gun2" parent="." node_paths=PackedStringArray("projectile_origin") instance=ExtResource("20_3x3as")]
+time_between_shots = 0.07
+projectile = ExtResource("21_6hc4h")
+projectile_origin = NodePath("../Right Gun 2")
 
 [node name="HitmarkerAudio" type="Node2D" parent="."]
 script = ExtResource("24_52o5h")
@@ -195,5 +213,20 @@ sounds = Array[AudioStreamWAV]([ExtResource("24_dhq0w")])
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="HitmarkerAudio"]
 stream = SubResource("AudioStreamRandomizer_bfgyo")
 
+[node name="PowerupPickerUpper" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PowerupPickerUpper"]
+shape = SubResource("CapsuleShape2D_gkwtn")
+
+[node name="Bomb Gun" parent="." node_paths=PackedStringArray("projectile_origin") instance=ExtResource("20_3x3as")]
+projectile = ExtResource("25_l0tkh")
+projectile_origin = NodePath("../Middle Gun")
+button_action = "game_bomb"
+active = true
+has_ammo = true
+
 [connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+[connection signal="area_entered" from="PowerupPickerUpper" to="." method="_on_powerup_picker_upper_area_entered"]

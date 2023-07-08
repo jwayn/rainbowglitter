@@ -107,7 +107,6 @@ size = Vector2(782, 587)
 resource_local_to_scene = true
 
 [node name="Enemy" type="PathFollow2D"]
-lookahead = 52.762
 script = ExtResource("1_io2sp")
 speed = 250
 

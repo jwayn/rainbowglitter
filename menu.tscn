@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://bgagrax4a664b"]
+[gd_scene load_steps=25 format=3 uid="uid://bgagrax4a664b"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_gonyr"]
+[ext_resource type="Texture2D" uid="uid://dqkpj4s1xmqbm" path="res://Sprites/UI/msg_logo_stars.png" id="2_76fe1"]
 [ext_resource type="Texture2D" uid="uid://b2vh4a6egxl3l" path="res://Sprites/UI/msg_logo_red_line.png" id="2_y1gc2"]
 [ext_resource type="Texture2D" uid="uid://tm337ydf6pg1" path="res://Sprites/UI/msg_logo_orange_line.png" id="3_3h343"]
 [ext_resource type="Texture2D" uid="uid://b61m3xfogeyrp" path="res://Sprites/UI/msg_start_default.png" id="3_s47mq"]
@@ -19,6 +20,21 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x7167"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vp1jl"]
+
+[sub_resource type="Animation" id="Animation_sdodj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1223, -5.00012)]
+}
 
 [sub_resource type="Animation" id="Animation_xj8av"]
 resource_name = "glean"
@@ -48,25 +64,37 @@ tracks/1/keys = {
 "values": []
 }
 
-[sub_resource type="Animation" id="Animation_sdodj"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlcim"]
+_data = {
+"RESET": SubResource("Animation_sdodj"),
+"glean": SubResource("Animation_xj8av")
+}
+
+[sub_resource type="Animation" id="Animation_pi5o5"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PointLight2D:position")
+tracks/0/path = NodePath("sparkle:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1223, -5.00012)]
+"update": 1,
+"values": [2]
 }
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xlcim"]
-_data = {
-"RESET": SubResource("Animation_sdodj"),
-"glean": SubResource("Animation_xj8av")
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sparkle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_71t2i"]
@@ -111,33 +139,6 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_pi5o5"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("sparkle:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [2]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("sparkle:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rewuj"]
 _data = {
 "RESET": SubResource("Animation_pi5o5"),
@@ -154,13 +155,34 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gonyr")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BG" type="ColorRect" parent="."]
 light_mask = 0
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 2
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.160784, 0.145098, 0.188235, 1)
+
+[node name="Stars" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 584.0
+offset_right = 1197.0
+offset_bottom = 1078.0
+texture = ExtResource("2_76fe1")
+
+[node name="Stars2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1304.0
+offset_right = 1917.0
+offset_bottom = 1078.0
+texture = ExtResource("2_76fe1")
+
+[node name="Stars3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -5.0
+offset_right = 608.0
+offset_bottom = 1078.0
+texture = ExtResource("2_76fe1")
 
 [node name="RedLine" type="TextureRect" parent="."]
 material = SubResource("CanvasItemMaterial_x7167")

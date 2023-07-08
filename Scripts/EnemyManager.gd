@@ -186,7 +186,47 @@ func _ready():
 			"type": 0,
 			"formation": 1,
 			"parent": d1,
-			"spawn_time": 28.0,
+			"spawn_time": 24.0,
+			"item": {
+				"chance": 1,
+				"type": 0,
+			}
+		},
+		{
+			"type": 0,
+			"formation": 1,
+			"parent": d2,
+			"spawn_time": 25,
+			"item": {
+				"chance": 1,
+				"type": 0,
+			}
+		},
+		{
+			"type": 0,
+			"formation": 1,
+			"parent": d1,
+			"spawn_time": 26,
+			"item": {
+				"chance": 1,
+				"type": 0,
+			}
+		},
+		{
+			"type": 0,
+			"formation": 1,
+			"parent": d2,
+			"spawn_time": 27,
+			"item": {
+				"chance": 1,
+				"type": 0,
+			}
+		},
+		{
+			"type": 0,
+			"formation": 1,
+			"parent": d1,
+			"spawn_time": 28,
 			"item": {
 				"chance": 1,
 				"type": 0,
@@ -203,9 +243,9 @@ func _ready():
 			}
 		},
 		{
-			"type": 0,
+			"type": 1,
 			"formation": 1,
-			"parent": d1,
+			"parent": p2,
 			"spawn_time": 30,
 			"item": {
 				"chance": 1,
@@ -213,30 +253,50 @@ func _ready():
 			}
 		},
 		{
-			"type": 0,
+			"type": 1,
 			"formation": 1,
-			"parent": d2,
-			"spawn_time": 31,
+			"parent": p8,
+			"spawn_time": 30,
 			"item": {
 				"chance": 1,
 				"type": 0,
 			}
 		},
 		{
-			"type": 0,
+			"type": 1,
 			"formation": 1,
-			"parent": d1,
-			"spawn_time": 32,
+			"parent": p1,
+			"spawn_time": 30.25,
 			"item": {
 				"chance": 1,
 				"type": 0,
 			}
 		},
 		{
-			"type": 0,
+			"type": 1,
 			"formation": 1,
-			"parent": d2,
-			"spawn_time": 33,
+			"parent": p3,
+			"spawn_time": 30.25,
+			"item": {
+				"chance": 1,
+				"type": 0,
+			}
+		},
+		{
+			"type": 1,
+			"formation": 1,
+			"parent": p7,
+			"spawn_time": 30.25,
+			"item": {
+				"chance": 1,
+				"type": 0,
+			}
+		},
+		{
+			"type": 1,
+			"formation": 1,
+			"parent": p9,
+			"spawn_time": 30.25,
 			"item": {
 				"chance": 1,
 				"type": 0,

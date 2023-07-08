@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dm1wgo7f4nrqy"]
 
-[ext_resource type="Shader" path="res://Scenes/BlackHole.gdshader" id="1_uy64w"]
+[ext_resource type="Shader" path="res://Scripts/BlackHole.gdshader" id="1_uy64w"]
 [ext_resource type="Texture2D" uid="uid://mbgogbw4pnvk" path="res://Sprites/Texture1x1.png" id="2_rjh2n"]
 
 [sub_resource type="Curve" id="Curve_6w206"]

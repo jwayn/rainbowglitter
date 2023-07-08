@@ -12,22 +12,16 @@ var direction: Vector2
 var final_target_position: Vector2
 var laser_has_fired: bool = false
 
-func _ready():
-	print("Target acquired. laser instantiated.")
-
 func _process(delta):
 	if !telegraph_timer_started && !has_telegraphed && is_instance_valid(target):
 		telegraph_timer_started = true
 		# calls _on_charge_timer_timeout()
-		print("Starting the telegraph timer.")
 		$TelegraphTimer.start(telegraph_time)
 
 	if !has_telegraphed && !has_final_target:
-		print("We should be drawing the telegraph line to the player's position")
 		draw_telegraph_line(to_local(target.global_position))
 
 	elif !has_telegraphed && has_final_target:
-		print("We should be drawing the telegraph line to the final position")
 		draw_telegraph_line(to_local(final_target_position))
 
 	elif has_telegraphed && has_force_pull_completed:
@@ -47,7 +41,6 @@ func get_direction(from, to):
 	return (from - to).normalized()
 
 func _on_charge_timer_timeout():
-	print("Telegraph time over, fading out")
 	if(is_instance_valid(target)):
 		has_final_target = true
 		final_target_position = Vector2(target.global_position)
@@ -55,7 +48,6 @@ func _on_charge_timer_timeout():
 	$AnimationPlayer.play("FadeTelegraphOut")
 
 func clear_telegraph():
-	print("Fade out animation over, playing force pull")
 	$Telegraph.clear_points()
 	has_telegraphed = true
 	# Animation calls fire_laser()
@@ -72,14 +64,12 @@ func draw_laser():
 
 func fire_laser():
 	has_force_pull_completed = true
-	print("Force pull done, firing laser")
 	# Timer calls _on_laser_persistence_timeout()
 	$LaserPersistence.start(laser_persistance)
 	$LaserSound.play()
 	$Laser/HitboxComponent/CollisionShape2D.disabled = false
 
 func _on_laser_persistence_timeout():
-	print("Laser done, fading it out")
 	laser_has_fired = true
 	$Laser/HitboxComponent/CollisionShape2D.disabled = true
 	$AnimationPlayer.play("FadeLaserOut")
@@ -94,5 +84,4 @@ func create_hitbox():
 		shape.extents = Vector2(length / 2, 10)
 
 func remove_laser():
-	print("Laser fade out done, destroying")
 	queue_free()
