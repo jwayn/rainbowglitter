@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c1p6gcf35i6x"
+path="res://.godot/imported/Menu Button_Click_Sound_01-001.wav-0e322e0f682507069040e628da74f835.sample"
+
+[deps]
+
+source_file="res://Audio/Menu Button_Click_Sound_01-001.wav"
+dest_files=["res://.godot/imported/Menu Button_Click_Sound_01-001.wav-0e322e0f682507069040e628da74f835.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=36 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -7,9 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://c1267vio1vqh4" path="res://Sprites/StarLayer_RedGreen.png" id="4_0ehjs"]
 [ext_resource type="Shader" path="res://Scripts/Fog.gdshader" id="5_a06u4"]
 [ext_resource type="Script" path="res://Scripts/EnemyManager.gd" id="5_yun16"]
-[ext_resource type="PackedScene" uid="uid://b657147n5grej" path="res://Scenes/LaserEnemy.tscn" id="6_641m7"]
-[ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemy.tscn" id="7_wkivb"]
+[ext_resource type="PackedScene" uid="uid://b657147n5grej" path="res://Scenes/Enemies/LaserEnemy.tscn" id="7_44pek"]
+[ext_resource type="PackedScene" uid="uid://devi6hyt0i4pk" path="res://Scenes/Enemies/Enemy.tscn" id="8_s1iqw"]
 [ext_resource type="AudioStream" uid="uid://bm0wsp8d7144d" path="res://Audio/Massive_Squadron_Galaxy.wav" id="8_xxu1v"]
+[ext_resource type="PackedScene" uid="uid://dxaxkbaal5eks" path="res://Scenes/Enemies/double_barrell_enemy.tscn" id="9_4h8kn"]
+[ext_resource type="PackedScene" uid="uid://cl16iemhuxack" path="res://Scenes/Enemies/trishot_enemy.tscn" id="10_ve12n"]
 [ext_resource type="Script" path="res://Camera.gd" id="11_rey55"]
 [ext_resource type="PackedScene" uid="uid://dkh7hxccj76n2" path="res://Scenes/powerups/bomb_powerup.tscn" id="12_h7c1k"]
 
@@ -241,7 +243,7 @@ offset_bottom = 1079.0
 [node name="EnemyManager" type="Node2D" parent="."]
 position = Vector2(954, -115)
 script = ExtResource("5_yun16")
-enemy_types = Array[PackedScene]([ExtResource("6_641m7"), ExtResource("7_wkivb")])
+enemy_types = Array[PackedScene]([ExtResource("7_44pek"), ExtResource("8_s1iqw"), ExtResource("9_4h8kn"), ExtResource("10_ve12n")])
 
 [node name="FlightPaths" type="Node2D" parent="EnemyManager"]
 position = Vector2(1, 84)
@@ -264,6 +266,10 @@ curve = SubResource("Curve2D_x3hvu")
 [node name="VerticalPath5" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(-325, -11)
 curve = SubResource("Curve2D_dqgbt")
+
+[node name="Enemy" parent="EnemyManager/FlightPaths/VerticalPath5" instance=ExtResource("10_ve12n")]
+position = Vector2(335, -50)
+rotation = 1.5721
 
 [node name="VerticalPath6" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(410, 0)

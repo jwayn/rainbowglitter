@@ -29,8 +29,8 @@ shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
-radius = 23.0
-height = 50.0
+radius = 39.0
+height = 84.0
 
 [sub_resource type="Animation" id="Animation_tsykn"]
 resource_name = "Die"

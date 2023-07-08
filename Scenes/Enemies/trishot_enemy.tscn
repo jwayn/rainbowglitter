@@ -1,0 +1,174 @@
+[gd_scene load_steps=30 format=3 uid="uid://cl16iemhuxack"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_0ehci"]
+[ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_kaxf7"]
+[ext_resource type="Texture2D" uid="uid://d2nq5ih1awtvt" path="res://Sprites/enemy_triple.png" id="3_jphmh"]
+[ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="4_gw51i"]
+[ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="5_qvqx1"]
+[ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="6_a8f4s"]
+[ext_resource type="PackedScene" uid="uid://co6lkhclwounv" path="res://Components/enemy_weapon_component.tscn" id="7_dme6n"]
+[ext_resource type="PackedScene" uid="uid://chyfnkspgf3ey" path="res://Scenes/Projectiles/oval_projectile.tscn" id="8_my0dj"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="9_cdcfc"]
+[ext_resource type="AudioStream" uid="uid://dfj5t5n4non1h" path="res://Audio/Explosion_01.wav" id="10_ls752"]
+[ext_resource type="AudioStream" uid="uid://e1hmur04key4" path="res://Audio/Explosion_02.wav" id="11_mn8jq"]
+[ext_resource type="AudioStream" uid="uid://dgnykhkrs1oc3" path="res://Audio/Explosion_03.wav" id="12_apqng"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="13_rlqf1"]
+[ext_resource type="AudioStream" uid="uid://b7fqv5m21kow6" path="res://Audio/Hitmarker_01.wav" id="14_2idpm"]
+[ext_resource type="AudioStream" uid="uid://cu88r07nsr4qs" path="res://Audio/Hitmarker_02.wav" id="15_s8blv"]
+[ext_resource type="AudioStream" uid="uid://gqjgrwxd7ste" path="res://Audio/Hitmarker_03.wav" id="16_e0vb2"]
+[ext_resource type="AudioStream" uid="uid://dr8khtmvdx134" path="res://Audio/Hitmarker_04.wav" id="17_xk1tq"]
+[ext_resource type="AudioStream" uid="uid://curdh4kd8w6up" path="res://Audio/Hitmarker_05.wav" id="18_lp02e"]
+[ext_resource type="AudioStream" uid="uid://b01fqjebai5b3" path="res://Audio/Hitmarker_06.wav" id="19_r2tc4"]
+[ext_resource type="AudioStream" uid="uid://cg2g1ujp3hncw" path="res://Audio/Hitmarker_07.wav" id="20_0mowb"]
+[ext_resource type="AudioStream" uid="uid://cifahvu1b01t0" path="res://Audio/Hitmarker_08.wav" id="21_i0dn0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ynirk"]
+resource_local_to_scene = true
+shader = ExtResource("2_kaxf7")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
+radius = 41.0
+height = 90.0
+
+[sub_resource type="Animation" id="Animation_tsykn"]
+resource_name = "Die"
+length = 0.4302
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04236, 0.0924699, 0.175517, 0.248877, 0.340158, 0.386043),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.429152),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oafv2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vx1ih"]
+resource_name = "hit"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0573755, 0.118626),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
+_data = {
+"Die": SubResource("Animation_tsykn"),
+"RESET": SubResource("Animation_oafv2"),
+"hit": SubResource("Animation_vx1ih")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_go7io"]
+size = Vector2(782, 587)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qgptt"]
+resource_local_to_scene = true
+
+[node name="Enemy" type="PathFollow2D"]
+script = ExtResource("1_0ehci")
+speed = 100
+
+[node name="EnemySprite" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ynirk")
+rotation = -1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("3_jphmh")
+
+[node name="BulletPoint" type="Marker2D" parent="."]
+position = Vector2(34, 0)
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_gw51i")]
+MAX_HEALTH = 10
+STARTING_HEALTH = 10
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_qvqx1")]
+rotation = -1.5708
+collision_layer = 4
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(2.53399e-05, -7)
+shape = SubResource("CapsuleShape2D_52kuw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k4i2n")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("6_a8f4s")
+hframes = 7
+frame = 3
+
+[node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_dme6n")]
+origin = NodePath("../BulletPoint")
+projectile = ExtResource("8_my0dj")
+time_between_shots = 1.0
+num_projectiles = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWeaponComponent/RangeCollider" index="0"]
+position = Vector2(391, 0)
+shape = SubResource("RectangleShape2D_go7io")
+
+[node name="DeathSoundPlayer" parent="." instance=ExtResource("9_cdcfc")]
+sounds = Array[AudioStreamWAV]([ExtResource("10_ls752"), ExtResource("11_mn8jq"), ExtResource("12_apqng")])
+
+[node name="HitConfirmSoundPlayer" type="Node2D" parent="."]
+script = ExtResource("13_rlqf1")
+sounds = Array[AudioStreamWAV]([ExtResource("14_2idpm"), ExtResource("15_s8blv"), ExtResource("16_e0vb2"), ExtResource("17_xk1tq"), ExtResource("18_lp02e"), ExtResource("19_r2tc4"), ExtResource("20_0mowb"), ExtResource("21_i0dn0")])
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="HitConfirmSoundPlayer"]
+stream = SubResource("AudioStreamRandomizer_qgptt")
+volume_db = 12.0
+bus = &"Hit Markers"
+
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken" flags=18]
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted" flags=18]
+[connection signal="on_hit" from="HurtboxComponent" to="." method="_on_hurtbox_component_on_hit" flags=18]
+
+[editable path="EnemyWeaponComponent"]

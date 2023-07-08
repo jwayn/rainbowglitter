@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c126gfhec6gqf"]
+
+[ext_resource type="Script" path="res://Scripts/straight_laser_projectile.gd" id="1_ipsjv"]
+[ext_resource type="Texture2D" uid="uid://coa4yglpfttum" path="res://Sprites/projectile_straight_laser.png" id="1_mt2vn"]
+[ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="3_our3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yq1t8"]
+size = Vector2(2, 10)
+
+[node name="straight_laser_projectile" type="Node2D"]
+script = ExtResource("1_ipsjv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_mt2vn")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_our3q")]
+collision_layer = 2
+collision_mask = 8
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_yq1t8")
+
+[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]

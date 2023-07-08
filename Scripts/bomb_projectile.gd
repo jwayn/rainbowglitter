@@ -25,3 +25,6 @@ func _on_contact_collider_area_entered(area):
 	$AnimationPlayer.play("explode")
 	await $AnimationPlayer.animation_finished
 	queue_free()
+
+func set_target(target):
+	pass

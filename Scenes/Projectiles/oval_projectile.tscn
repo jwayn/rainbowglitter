@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://chyfnkspgf3ey"]
+
+[ext_resource type="Script" path="res://Scripts/oval_projectile.gd" id="1_7rmqp"]
+[ext_resource type="Texture2D" uid="uid://1df7dym0smjb" path="res://Sprites/projectile_triple.png" id="1_fyw3t"]
+[ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="2_uxla4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_psssw"]
+radius = 2.82718
+height = 18.3347
+
+[sub_resource type="Animation" id="Animation_y4ymt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_txu7u"]
+resource_name = "rotate"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8xscu"]
+_data = {
+"RESET": SubResource("Animation_y4ymt"),
+"rotate": SubResource("Animation_txu7u")
+}
+
+[node name="oval_projectile" type="Node2D"]
+script = ExtResource("1_7rmqp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_fyw3t")
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_uxla4")]
+collision_layer = 2
+collision_mask = 8
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+rotation = 0.755728
+shape = SubResource("CapsuleShape2D_psssw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rotate"
+libraries = {
+"": SubResource("AnimationLibrary_8xscu")
+}
+
+[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]

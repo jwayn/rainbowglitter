@@ -1,0 +1,313 @@
+[gd_scene load_steps=35 format=3 uid="uid://dxaxkbaal5eks"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_534vw"]
+[ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="2_pwqsx"]
+[ext_resource type="Texture2D" uid="uid://d3ngsifpcp2i2" path="res://Sprites/KnightLookingEnemy.png" id="3_prdje"]
+[ext_resource type="PackedScene" uid="uid://chhipqm7sno7s" path="res://Components/health_component.tscn" id="4_8ufo2"]
+[ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="5_px5ef"]
+[ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="6_6bfmd"]
+[ext_resource type="Script" path="res://Scripts/EnemyMultiProjectileManager.gd" id="7_li5mt"]
+[ext_resource type="PackedScene" uid="uid://dntxntn76kbu" path="res://Components/hitbox_component.tscn" id="8_3pv3s"]
+[ext_resource type="Script" path="res://Scripts/EnemyWeaponComponent.gd" id="9_6cgca"]
+[ext_resource type="PackedScene" uid="uid://bw1jltuhy38bp" path="res://Components/random_audio_player_component.tscn" id="9_6jpql"]
+[ext_resource type="AudioStream" uid="uid://dfj5t5n4non1h" path="res://Audio/Explosion_01.wav" id="10_ibbf5"]
+[ext_resource type="PackedScene" uid="uid://c126gfhec6gqf" path="res://Scenes/Projectiles/straight_laser_projectile.tscn" id="10_v6p62"]
+[ext_resource type="AudioStream" uid="uid://e1hmur04key4" path="res://Audio/Explosion_02.wav" id="11_mpk53"]
+[ext_resource type="AudioStream" uid="uid://dgnykhkrs1oc3" path="res://Audio/Explosion_03.wav" id="12_d0vi7"]
+[ext_resource type="Script" path="res://Scripts/random_audio_player.gd" id="13_ckfsl"]
+[ext_resource type="AudioStream" uid="uid://b7fqv5m21kow6" path="res://Audio/Hitmarker_01.wav" id="14_64pgl"]
+[ext_resource type="AudioStream" uid="uid://cu88r07nsr4qs" path="res://Audio/Hitmarker_02.wav" id="15_j3reg"]
+[ext_resource type="AudioStream" uid="uid://gqjgrwxd7ste" path="res://Audio/Hitmarker_03.wav" id="16_cwxou"]
+[ext_resource type="AudioStream" uid="uid://dr8khtmvdx134" path="res://Audio/Hitmarker_04.wav" id="17_r3476"]
+[ext_resource type="AudioStream" uid="uid://curdh4kd8w6up" path="res://Audio/Hitmarker_05.wav" id="18_xr1rf"]
+[ext_resource type="AudioStream" uid="uid://b01fqjebai5b3" path="res://Audio/Hitmarker_06.wav" id="19_qr4ex"]
+[ext_resource type="AudioStream" uid="uid://cg2g1ujp3hncw" path="res://Audio/Hitmarker_07.wav" id="20_tn3je"]
+[ext_resource type="AudioStream" uid="uid://cifahvu1b01t0" path="res://Audio/Hitmarker_08.wav" id="21_1d7mo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e6c65"]
+resource_local_to_scene = true
+shader = ExtResource("2_pwqsx")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_52kuw"]
+radius = 39.0
+height = 84.0
+
+[sub_resource type="Animation" id="Animation_tsykn"]
+resource_name = "Die"
+length = 0.4302
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04236, 0.0924699, 0.175517, 0.248877, 0.340158, 0.386043),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.429152),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oafv2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vx1ih"]
+resource_name = "hit"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0573755, 0.118626),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
+_data = {
+"Die": SubResource("Animation_tsykn"),
+"RESET": SubResource("Animation_oafv2"),
+"hit": SubResource("Animation_vx1ih")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_go7io"]
+size = Vector2(782, 587)
+
+[sub_resource type="Animation" id="Animation_vnkbo"]
+resource_name = "shooting"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.051069, 0.101117, 0.151164, 0.199169, 0.251259, 0.3, 0.35, 0.4, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BulletPoint:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.201212, 0.25, 0.3, 0.35, 0.4, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(24, 21), Vector2(19, 21), Vector2(13, 21), Vector2(13, 21), Vector2(23, 21), Vector2(23.0611, 21), Vector2(21, 21), Vector2(17, 21), Vector2(21, 21), Vector2(23, 21)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BulletPoint2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.201212, 0.25, 0.3, 0.35, 0.4, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(24, -21), Vector2(21, -21), Vector2(17, -21), Vector2(17, -21), Vector2(23, -21), Vector2(23.0611, -21), Vector2(19, -21), Vector2(13, -21), Vector2(19, -21), Vector2(23, -21)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ProjectileManager")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"fire_right_weapon"
+}, {
+"args": [],
+"method": &"fire_left_weapon"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_35bh5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BulletPoint:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 21)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BulletPoint2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, -21)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_krdf4"]
+_data = {
+"RESET": SubResource("Animation_35bh5"),
+"shooting": SubResource("Animation_vnkbo")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nxjuq"]
+resource_local_to_scene = true
+
+[node name="Enemy" type="PathFollow2D"]
+script = ExtResource("1_534vw")
+speed = 150
+
+[node name="EnemySprite" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_e6c65")
+rotation = -1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("3_prdje")
+hframes = 10
+
+[node name="BulletPoint" type="Marker2D" parent="."]
+position = Vector2(24, 21)
+
+[node name="BulletPoint2" type="Marker2D" parent="."]
+position = Vector2(24, -21)
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_8ufo2")]
+MAX_HEALTH = 10
+STARTING_HEALTH = 10
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_px5ef")]
+rotation = -1.5708
+collision_layer = 4
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(-1.19209e-07, 0)
+shape = SubResource("CapsuleShape2D_52kuw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k4i2n")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("6_6bfmd")
+hframes = 7
+
+[node name="ProjectileManager" type="Node2D" parent="."]
+script = ExtResource("7_li5mt")
+
+[node name="RangeCollider" parent="ProjectileManager" instance=ExtResource("8_3pv3s")]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileManager/RangeCollider"]
+position = Vector2(391, 0)
+shape = SubResource("RectangleShape2D_go7io")
+
+[node name="RightWeapon" type="Node2D" parent="ProjectileManager" node_paths=PackedStringArray("origin")]
+script = ExtResource("9_6cgca")
+origin = NodePath("../../BulletPoint2")
+projectile = ExtResource("10_v6p62")
+time_between_shots = 0.0
+auto_shoot = false
+
+[node name="WeaponSpeedTimer" type="Timer" parent="ProjectileManager/RightWeapon"]
+
+[node name="LeftWeapon" type="Node2D" parent="ProjectileManager" node_paths=PackedStringArray("origin")]
+script = ExtResource("9_6cgca")
+origin = NodePath("../../BulletPoint")
+projectile = ExtResource("10_v6p62")
+time_between_shots = 0.0
+auto_shoot = false
+
+[node name="WeaponSpeedTimer" type="Timer" parent="ProjectileManager/LeftWeapon"]
+
+[node name="EnemyAnimations" type="AnimationPlayer" parent="ProjectileManager"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_krdf4")
+}
+
+[node name="ShootingTimer" type="Timer" parent="ProjectileManager"]
+
+[node name="DeathSoundPlayer" parent="." instance=ExtResource("9_6jpql")]
+sounds = Array[AudioStreamWAV]([ExtResource("10_ibbf5"), ExtResource("11_mpk53"), ExtResource("12_d0vi7")])
+
+[node name="HitConfirmSoundPlayer" type="Node2D" parent="."]
+script = ExtResource("13_ckfsl")
+sounds = Array[AudioStreamWAV]([ExtResource("14_64pgl"), ExtResource("15_j3reg"), ExtResource("16_cwxou"), ExtResource("17_r3476"), ExtResource("18_xr1rf"), ExtResource("19_qr4ex"), ExtResource("20_tn3je"), ExtResource("21_1d7mo")])
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="HitConfirmSoundPlayer"]
+stream = SubResource("AudioStreamRandomizer_nxjuq")
+volume_db = 12.0
+bus = &"Hit Markers"
+
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken" flags=18]
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted" flags=18]
+[connection signal="on_hit" from="HurtboxComponent" to="." method="_on_hurtbox_component_on_hit" flags=18]
+[connection signal="area_entered" from="ProjectileManager/RangeCollider" to="ProjectileManager" method="_on_range_collider_area_entered"]
+[connection signal="area_entered" from="ProjectileManager/RangeCollider" to="ProjectileManager/RightWeapon" method="_on_range_collider_area_entered"]
+[connection signal="area_entered" from="ProjectileManager/RangeCollider" to="ProjectileManager/LeftWeapon" method="_on_range_collider_area_entered" flags=18]
+[connection signal="timeout" from="ProjectileManager/RightWeapon/WeaponSpeedTimer" to="ProjectileManager/RightWeapon" method="_on_weapon_speed_timer_timeout" flags=18]
+[connection signal="timeout" from="ProjectileManager/LeftWeapon/WeaponSpeedTimer" to="ProjectileManager/LeftWeapon" method="_on_weapon_speed_timer_timeout" flags=18]
+[connection signal="timeout" from="ProjectileManager/ShootingTimer" to="ProjectileManager" method="_on_shooting_timer_timeout"]

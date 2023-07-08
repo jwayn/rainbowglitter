@@ -15,14 +15,17 @@ func _process(delta):
 
 func _on_play_pressed():
 	get_tree().change_scene_to_packed(world_scene)
+	play_click_sound()
 
 
 func _on_quit_pressed():
 	get_tree().quit()
+	play_click_sound()
+	
 
 
 func _on_options_pressed():
-	pass # Replace with function body.
+	play_click_sound()
 
 func start_sparkle_timer():
 	randomize()
@@ -38,3 +41,20 @@ func move_sparkle_to_random_location_and_play():
 
 func _on_sparkle_timer_timeout():
 	move_sparkle_to_random_location_and_play()
+
+func play_click_sound():
+	$ClickSound.play()
+
+func play_hover_sound():
+	$HoverSound.play()
+
+func _on_play_mouse_entered():
+	play_hover_sound()
+
+
+func _on_quit_mouse_entered():
+	play_hover_sound()
+
+
+func _on_options_mouse_entered():
+	play_hover_sound()
