@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=38 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://dxaxkbaal5eks" path="res://Scenes/Enemies/double_barrell_enemy.tscn" id="9_4h8kn"]
 [ext_resource type="PackedScene" uid="uid://cl16iemhuxack" path="res://Scenes/Enemies/trishot_enemy.tscn" id="10_ve12n"]
 [ext_resource type="Script" path="res://Camera.gd" id="11_rey55"]
-[ext_resource type="PackedScene" uid="uid://dkh7hxccj76n2" path="res://Scenes/powerups/bomb_powerup.tscn" id="12_h7c1k"]
 [ext_resource type="Script" path="res://vol_slider.gd" id="16_e8t5l"]
 [ext_resource type="Script" path="res://OptionButton.gd" id="17_eyqln"]
 
@@ -272,10 +271,6 @@ curve = SubResource("Curve2D_x3hvu")
 position = Vector2(-325, -11)
 curve = SubResource("Curve2D_dqgbt")
 
-[node name="Enemy" parent="EnemyManager/FlightPaths/VerticalPath5" instance=ExtResource("10_ve12n")]
-position = Vector2(335, -50)
-rotation = 1.5721
-
 [node name="VerticalPath6" type="Path2D" parent="EnemyManager/FlightPaths"]
 position = Vector2(410, 0)
 curve = SubResource("Curve2D_guak6")
@@ -354,9 +349,6 @@ bus = &"Music"
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("11_rey55")
-
-[node name="BombPowerup" parent="." instance=ExtResource("12_h7c1k")]
-position = Vector2(964, 761)
 
 [node name="pause_screen" type="Control" parent="."]
 process_mode = 2

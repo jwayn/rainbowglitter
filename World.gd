@@ -13,7 +13,6 @@ func _process(delta):
 		$pause_screen.show()
 
 
-
 func _on_option_button_item_selected(index):
 	if index == 0:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
