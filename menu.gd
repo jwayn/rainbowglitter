@@ -14,13 +14,13 @@ func _process(delta):
 
 
 func _on_play_pressed():
-	get_tree().change_scene_to_packed(world_scene)
 	play_click_sound()
+	get_tree().change_scene_to_packed(world_scene)
 
 
 func _on_quit_pressed():
-	get_tree().quit()
 	play_click_sound()
+	get_tree().quit()
 	
 
 

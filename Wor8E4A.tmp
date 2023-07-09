@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=38 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" path="res://Camera.gd" id="11_rey55"]
 [ext_resource type="PackedScene" uid="uid://dkh7hxccj76n2" path="res://Scenes/powerups/bomb_powerup.tscn" id="12_h7c1k"]
 [ext_resource type="Script" path="res://vol_slider.gd" id="16_e8t5l"]
-[ext_resource type="Script" path="res://OptionButton.gd" id="17_eyqln"]
 
 [sub_resource type="Animation" id="Animation_ntj25"]
 resource_name = "star_flicker"
@@ -415,9 +414,8 @@ text = "100
 [node name="HSlider" type="HSlider" parent="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Volume/HBoxContainer"]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
-max_value = 1.0
-step = 0.01
-value = 1.0
+min_value = -80.0
+max_value = 0.0
 script = ExtResource("16_e8t5l")
 
 [node name="Display Mode" type="HBoxContainer" parent="pause_screen/MarginContainer/BoxContainer/VBoxContainer"]
@@ -440,7 +438,6 @@ popup/item_0/text = "Fullscreen"
 popup/item_0/id = 0
 popup/item_1/text = "Windowed"
 popup/item_1/id = 1
-script = ExtResource("17_eyqln")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="pause_screen/MarginContainer/BoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -475,6 +472,7 @@ layout_mode = 2
 text = "Quit to Desktop
 "
 
+[connection signal="value_changed" from="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Volume/HBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="value_changed" from="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Volume/HBoxContainer/HSlider" to="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Volume/HBoxContainer/HSlider" method="_on_value_changed"]
 [connection signal="item_selected" from="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Display Mode/HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="pressed" from="pause_screen/MarginContainer/BoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/Save" to="." method="_on_save_pressed"]
