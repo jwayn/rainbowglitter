@@ -25,6 +25,7 @@ func _on_quit_pressed():
 
 
 func _on_options_pressed():
+	$options_container.show()
 	play_click_sound()
 
 func start_sparkle_timer():
@@ -58,3 +59,16 @@ func _on_quit_mouse_entered():
 
 func _on_options_mouse_entered():
 	play_hover_sound()
+
+
+func _on_option_button_item_selected(index):
+	if index == 0:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	if index == 1:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+func _on_back_pressed():
+	$options_container.hide()
+	get_tree().paused = false
+	play_click_sound()
