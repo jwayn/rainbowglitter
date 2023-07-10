@@ -349,6 +349,7 @@ bus = &"Music"
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("11_rey55")
+NOISE_SHAKE_STRENGTH = 25.0
 
 [node name="pause_screen" type="Control" parent="."]
 process_mode = 2

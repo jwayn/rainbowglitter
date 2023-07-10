@@ -191,7 +191,6 @@ sounds = Array[AudioStreamWAV]([ExtResource("7_ttwdm"), ExtResource("8_tdyui"), 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="LaserSound"]
 stream = SubResource("AudioStreamRandomizer_on0m1")
 volume_db = 6.0
-bus = &"Laser Guns"
 
 [connection signal="timeout" from="TelegraphTimer" to="." method="_on_charge_timer_timeout"]
 [connection signal="timeout" from="LaserPersistence" to="." method="_on_laser_persistence_timeout"]
