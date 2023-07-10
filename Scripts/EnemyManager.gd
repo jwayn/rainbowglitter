@@ -324,7 +324,7 @@ func _ready():
 		},
 		{
 			"type": 1,
-			"spawn_time": 34
+			"spawn_time": 36
 		},
 	]
 
