@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b61ogownm4on1"
+path="res://.godot/imported/Celestial Glider Original.wav-fe778a23d44a7c951da12cc45a716d03.sample"
+
+[deps]
+
+source_file="res://Audio/Celestial Glider Original.wav"
+dest_files=["res://.godot/imported/Celestial Glider Original.wav-fe778a23d44a7c951da12cc45a716d03.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
