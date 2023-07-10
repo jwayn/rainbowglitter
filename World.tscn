@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dgfdytn6mtnfw"]
+[gd_scene load_steps=41 format=3 uid="uid://dgfdytn6mtnfw"]
 
 [ext_resource type="PackedScene" uid="uid://dbekokqy5744j" path="res://Scenes/player.tscn" id="1_2io6t"]
 [ext_resource type="Script" path="res://Scripts/BGMover.gd" id="1_3i768"]
@@ -14,8 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://dxaxkbaal5eks" path="res://Scenes/Enemies/double_barrell_enemy.tscn" id="9_4h8kn"]
 [ext_resource type="PackedScene" uid="uid://cl16iemhuxack" path="res://Scenes/Enemies/trishot_enemy.tscn" id="10_ve12n"]
 [ext_resource type="Script" path="res://Camera.gd" id="11_rey55"]
+[ext_resource type="PackedScene" uid="uid://cprp33mfe0pur" path="res://Scenes/Enemies/boss/big_gun.tscn" id="14_r37ox"]
 [ext_resource type="Script" path="res://vol_slider.gd" id="16_e8t5l"]
+[ext_resource type="Script" path="res://boss.gd" id="17_6vwir"]
 [ext_resource type="Script" path="res://OptionButton.gd" id="17_eyqln"]
+[ext_resource type="Texture2D" uid="uid://dqokp6q68rnan" path="res://Sprites/boss.png" id="17_x6t77"]
 
 [sub_resource type="Animation" id="Animation_ntj25"]
 resource_name = "star_flicker"
@@ -300,6 +303,37 @@ curve = SubResource("Curve2D_dpvxx")
 [node name="DiagonalPath2" type="Path2D" parent="EnemyManager/FlightPaths"]
 curve = SubResource("Curve2D_ujtpf")
 
+[node name="BossManager" type="Node2D" parent="."]
+
+[node name="Boss" type="Node2D" parent="BossManager" node_paths=PackedStringArray("markers")]
+position = Vector2(956, -244)
+script = ExtResource("17_6vwir")
+markers = [NodePath("../../boss_markers/main_mid"), NodePath("../../boss_markers/lower_right"), NodePath("../../boss_markers/upper_right"), NodePath("../../boss_markers/upper_left"), NodePath("../../boss_markers/lower_left")]
+
+[node name="Sprite2D" type="Sprite2D" parent="BossManager/Boss"]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("17_x6t77")
+
+[node name="Guns" type="Node2D" parent="BossManager/Boss"]
+
+[node name="big_gun" parent="BossManager/Boss/Guns" instance=ExtResource("14_r37ox")]
+
+[node name="big_gun2" parent="BossManager/Boss/Guns" instance=ExtResource("14_r37ox")]
+position = Vector2(-150, -35)
+
+[node name="big_gun3" parent="BossManager/Boss/Guns" instance=ExtResource("14_r37ox")]
+position = Vector2(-58, 58)
+
+[node name="big_gun4" parent="BossManager/Boss/Guns" instance=ExtResource("14_r37ox")]
+position = Vector2(58, 59)
+
+[node name="big_gun5" parent="BossManager/Boss/Guns" instance=ExtResource("14_r37ox")]
+position = Vector2(149, -32)
+
+[node name="big_gun6" parent="BossManager/Boss/Guns" instance=ExtResource("14_r37ox")]
+position = Vector2(238, -122)
+
 [node name="Player" parent="." instance=ExtResource("1_2io6t")]
 position = Vector2(965, 912)
 scale = Vector2(2, 2)
@@ -466,6 +500,23 @@ size_flags_vertical = 4
 layout_mode = 2
 text = "Quit to Desktop
 "
+
+[node name="boss_markers" type="Node2D" parent="."]
+
+[node name="main_mid" type="Marker2D" parent="boss_markers"]
+position = Vector2(964, 252)
+
+[node name="lower_right" type="Marker2D" parent="boss_markers"]
+position = Vector2(1114, 370)
+
+[node name="upper_right" type="Marker2D" parent="boss_markers"]
+position = Vector2(1080, 149)
+
+[node name="upper_left" type="Marker2D" parent="boss_markers"]
+position = Vector2(827, 147)
+
+[node name="lower_left" type="Marker2D" parent="boss_markers"]
+position = Vector2(831, 361)
 
 [connection signal="value_changed" from="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Volume/HBoxContainer/HSlider" to="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Volume/HBoxContainer/HSlider" method="_on_value_changed"]
 [connection signal="item_selected" from="pause_screen/MarginContainer/BoxContainer/VBoxContainer/Display Mode/HBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]

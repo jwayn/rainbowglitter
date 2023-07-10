@@ -349,4 +349,4 @@ func _process(delta):
 	current_time += delta
 
 func spawn_boss():
-	print("we're spawning ye olde boss")
+	pass
