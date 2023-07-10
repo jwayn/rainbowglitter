@@ -43,6 +43,6 @@ func spawn_powerup(type):
 		#Spawn bomb
 		powerup = bomb
 	var p = powerup.instantiate()
-	$/root/World/Bullets.add_child(p)
+	$/root/World/Bullets.call_deferred("add_child", p)
 	p.position = position
 	queue_free()

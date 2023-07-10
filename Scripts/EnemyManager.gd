@@ -310,6 +310,22 @@ func _ready():
 			"type": 0,
 			"spawn_time": 5
 		},
+		{
+			"type": 1,
+			"spawn_time": 10
+		},
+		{
+			"type": 1,
+			"spawn_time": 21
+		},
+		{
+			"type": 0,
+			"spawn_time": 33
+		},
+		{
+			"type": 1,
+			"spawn_time": 34
+		},
 	]
 
 

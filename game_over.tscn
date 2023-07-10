@@ -1,0 +1,89 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwqbfrxrkcr4b"]
+
+[ext_resource type="Script" path="res://game_over.gd" id="1_t23qs"]
+[ext_resource type="Texture2D" uid="uid://dqkpj4s1xmqbm" path="res://Sprites/UI/msg_logo_stars.png" id="1_xwew7"]
+[ext_resource type="Texture2D" uid="uid://62785qnshtvg" path="res://Sprites/UI/game_over/gameover.png" id="2_4bisq"]
+[ext_resource type="Texture2D" uid="uid://bnfn6f675a82q" path="res://Sprites/UI/game_over/Play_Button-normal.png" id="3_j7pd5"]
+[ext_resource type="Texture2D" uid="uid://bd32xhggnx8jb" path="res://Sprites/UI/game_over/Play_Button-pressed.png" id="4_ehjg4"]
+[ext_resource type="Texture2D" uid="uid://blnbrfxqkyyic" path="res://Sprites/UI/game_over/Menu_Button-normal.png" id="5_rfg3x"]
+[ext_resource type="Texture2D" uid="uid://blh8ntqhnirlq" path="res://Sprites/UI/game_over/Menu_Button-pressed.png" id="6_6r6p7"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t23qs")
+
+[node name="BG" type="ColorRect" parent="."]
+light_mask = 0
+texture_filter = 1
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.160784, 0.145098, 0.188235, 1)
+
+[node name="Stars" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = 645.0
+offset_top = 4.0
+offset_right = 1258.0
+offset_bottom = 1082.0
+texture = ExtResource("1_xwew7")
+
+[node name="Stars2" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = 1304.0
+offset_right = 1917.0
+offset_bottom = 1078.0
+texture = ExtResource("1_xwew7")
+
+[node name="Stars3" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = -5.0
+offset_right = 608.0
+offset_bottom = 1078.0
+texture = ExtResource("1_xwew7")
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(800, 150)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="BoxContainer/VBoxContainer/MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_4bisq")
+
+[node name="MarginContainer3" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Play" type="TextureButton" parent="BoxContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_j7pd5")
+texture_pressed = ExtResource("4_ehjg4")
+
+[node name="MarginContainer2" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Menu" type="TextureButton" parent="BoxContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("5_rfg3x")
+texture_pressed = ExtResource("6_6r6p7")
+
+[connection signal="pressed" from="BoxContainer/VBoxContainer/MarginContainer3/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="BoxContainer/VBoxContainer/MarginContainer2/Menu" to="." method="_on_menu_pressed"]

@@ -12,6 +12,7 @@ const MAX_GUNS = 4
 @onready var right_gun_2 = $"Right Gatling Gun2"
 @onready var guns = [left_gun_1, right_gun_1, left_gun_2, right_gun_2,]
 
+var game_over_screen
 var is_moving = false
 var flame_trail
 var is_dead: bool = false
@@ -19,6 +20,7 @@ var is_dead: bool = false
 
 func _ready():
 	flame_trail = $Ship/AnimatedSprite2D
+	game_over_screen = load("res://game_over.tscn")
 	
 
 func handle_movement(delta):
@@ -62,6 +64,7 @@ func _on_health_component_health_depleted():
 
 func die():
 	queue_free()
+	get_tree().change_scene_to_packed(game_over_screen)
 
 
 func _on_health_component_damage_taken():
