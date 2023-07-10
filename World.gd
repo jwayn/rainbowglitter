@@ -31,4 +31,3 @@ func _on_quit_to_menu_pressed():
 
 func _on_quit_to_desktop_pressed():
 	get_tree().quit()
-

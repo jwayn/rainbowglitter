@@ -167,8 +167,8 @@ position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_dl6jv")
 
 [node name="HealthComponent" parent="." instance=ExtResource("19_iihin")]
-MAX_HEALTH = 20
-STARTING_HEALTH = 20
+MAX_HEALTH = 30
+STARTING_HEALTH = 30
 
 [node name="Bullets" type="Node2D" parent="."]
 

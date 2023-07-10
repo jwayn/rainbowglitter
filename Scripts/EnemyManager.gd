@@ -6,6 +6,7 @@ var current_index = 0
 var powerup_index = 0
 
 var powerup_scene = preload("res://Scenes/powerups/powerup_container.tscn")
+var boss_scene = preload("res://Scenes/Enemies/boss/boss.tscn")
 
 @export var enemy_types: Array[PackedScene]
 @onready var p1 = get_node("FlightPaths/VerticalPath1")
@@ -24,6 +25,8 @@ var powerup_scene = preload("res://Scenes/powerups/powerup_container.tscn")
 
 var enemies
 var powerups
+
+var has_boss_spawned = false
 
 func _ready():
 	
@@ -1056,7 +1059,9 @@ func _process(delta):
 			enemies[current_index]["parent"].add_child(e)
 			current_index += 1
 	else:
-		spawn_boss()
+		if !has_boss_spawned:
+			has_boss_spawned = true
+			$BossTimer.start(10)
 		
 	if powerup_index <= powerups.size() - 1:
 		if powerups[powerup_index]["spawn_time"] <= snapped(current_time, 0.01):
@@ -1067,4 +1072,12 @@ func _process(delta):
 	current_time += delta
 
 func spawn_boss():
-	pass
+	$/root/World/MusicPlayer.stop()
+	$/root/World/BossMusic.play()
+	var b = boss_scene.instantiate()
+	$/root/World/BossManager.add_child(b)
+	b.position = Vector2(962, -252)
+
+
+func _on_boss_timer_timeout():
+	spawn_boss()

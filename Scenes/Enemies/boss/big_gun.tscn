@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://cifahvu1b01t0" path="res://Audio/Hitmarker_08.wav" id="15_438m6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_npi6v"]
+resource_local_to_scene = true
 shader = ExtResource("3_yl1bc")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
@@ -139,8 +140,9 @@ texture = ExtResource("4_il1am")
 [node name="spawn" type="Marker2D" parent="."]
 position = Vector2(0, 76)
 
-[node name="HurtboxComponent" parent="." instance=ExtResource("5_yiu1i")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_yiu1i")]
 collision_layer = 4
+health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 position = Vector2(0, 11)

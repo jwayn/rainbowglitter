@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgagrax4a664b"]
+[gd_scene load_steps=30 format=3 uid="uid://bgagrax4a664b"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_gonyr"]
 [ext_resource type="Texture2D" uid="uid://dqkpj4s1xmqbm" path="res://Sprites/UI/msg_logo_stars.png" id="2_76fe1"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://dpbbjl3d24u2m" path="res://Audio/Menu_Button_Hover_Sound_03-001.wav" id="19_22thf"]
 [ext_resource type="AudioStream" uid="uid://bkucwmcrduhsv" path="res://Audio/Menu_Button_Hover_Sound_04-001.wav" id="20_6awja"]
 [ext_resource type="Script" path="res://vol_slider.gd" id="22_wpuw8"]
+[ext_resource type="AudioStream" uid="uid://bwqxnwcfvnn8h" path="res://Audio/Rising Star.wav" id="23_0m40p"]
 [ext_resource type="Script" path="res://OptionButton.gd" id="23_1k4qg"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x7167"]
@@ -470,6 +471,11 @@ size_flags_horizontal = 4
 layout_mode = 2
 text = "Back
 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_0m40p")
+autoplay = true
+bus = &"Music"
 
 [connection signal="mouse_entered" from="main_menu/VBoxContainer2/VBoxContainer/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="main_menu/VBoxContainer2/VBoxContainer/Play" to="." method="_on_play_pressed"]

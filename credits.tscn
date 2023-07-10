@@ -1,22 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://cwqbfrxrkcr4b"]
+[gd_scene load_steps=10 format=3 uid="uid://dkpuq6xu62v0m"]
 
-[ext_resource type="Script" path="res://game_over.gd" id="1_t23qs"]
-[ext_resource type="Texture2D" uid="uid://dqkpj4s1xmqbm" path="res://Sprites/UI/msg_logo_stars.png" id="1_xwew7"]
-[ext_resource type="Texture2D" uid="uid://62785qnshtvg" path="res://Sprites/UI/game_over/gameover.png" id="2_4bisq"]
-[ext_resource type="Texture2D" uid="uid://bnfn6f675a82q" path="res://Sprites/UI/game_over/Play_Button-normal.png" id="3_j7pd5"]
-[ext_resource type="Texture2D" uid="uid://bd32xhggnx8jb" path="res://Sprites/UI/game_over/Play_Button-pressed.png" id="4_ehjg4"]
-[ext_resource type="Texture2D" uid="uid://blnbrfxqkyyic" path="res://Sprites/UI/game_over/Menu_Button-normal.png" id="5_rfg3x"]
-[ext_resource type="Texture2D" uid="uid://blh8ntqhnirlq" path="res://Sprites/UI/game_over/Menu_Button-pressed.png" id="6_6r6p7"]
-[ext_resource type="AudioStream" uid="uid://b61ogownm4on1" path="res://Audio/Celestial Glider Original.wav" id="8_1r4m0"]
+[ext_resource type="Script" path="res://credits.gd" id="1_4isqj"]
+[ext_resource type="Texture2D" uid="uid://dqkpj4s1xmqbm" path="res://Sprites/UI/msg_logo_stars.png" id="1_rhohc"]
+[ext_resource type="Texture2D" uid="uid://vjial1x11rpi" path="res://Sprites/UI/credits/Credits.png" id="2_xipi0"]
+[ext_resource type="Texture2D" uid="uid://c4luvur8ko664" path="res://Sprites/UI/credits/Name_Plate.png" id="3_jckl8"]
+[ext_resource type="Texture2D" uid="uid://bnfn6f675a82q" path="res://Sprites/UI/game_over/Play_Button-normal.png" id="4_pt673"]
+[ext_resource type="Texture2D" uid="uid://bd32xhggnx8jb" path="res://Sprites/UI/game_over/Play_Button-pressed.png" id="5_rj52y"]
+[ext_resource type="Texture2D" uid="uid://blnbrfxqkyyic" path="res://Sprites/UI/game_over/Menu_Button-normal.png" id="6_0hl5j"]
+[ext_resource type="Texture2D" uid="uid://blh8ntqhnirlq" path="res://Sprites/UI/game_over/Menu_Button-pressed.png" id="7_o04pq"]
+[ext_resource type="AudioStream" uid="uid://b61ogownm4on1" path="res://Audio/Celestial Glider Original.wav" id="8_35gbb"]
 
-[node name="GameOver" type="Control"]
+[node name="Credits" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_t23qs")
+script = ExtResource("1_4isqj")
 
 [node name="BG" type="ColorRect" parent="."]
 light_mask = 0
@@ -34,7 +35,7 @@ offset_left = 645.0
 offset_top = 4.0
 offset_right = 1258.0
 offset_bottom = 1082.0
-texture = ExtResource("1_xwew7")
+texture = ExtResource("1_rhohc")
 
 [node name="Stars2" type="TextureRect" parent="."]
 texture_filter = 1
@@ -42,7 +43,7 @@ layout_mode = 0
 offset_left = 1304.0
 offset_right = 1917.0
 offset_bottom = 1078.0
-texture = ExtResource("1_xwew7")
+texture = ExtResource("1_rhohc")
 
 [node name="Stars3" type="TextureRect" parent="."]
 texture_filter = 1
@@ -50,7 +51,7 @@ layout_mode = 0
 offset_left = -5.0
 offset_right = 608.0
 offset_bottom = 1078.0
-texture = ExtResource("1_xwew7")
+texture = ExtResource("1_rhohc")
 
 [node name="BoxContainer" type="BoxContainer" parent="."]
 layout_mode = 0
@@ -65,11 +66,23 @@ size_flags_vertical = 4
 [node name="MarginContainer" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
+theme_override_constants/margin_bottom = 0
 
 [node name="TextureRect" type="TextureRect" parent="BoxContainer/VBoxContainer/MarginContainer"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("2_4bisq")
+texture = ExtResource("2_xipi0")
+
+[node name="MarginContainer4" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(800, 300)
+layout_mode = 2
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TextureRect" type="TextureRect" parent="BoxContainer/VBoxContainer/MarginContainer4"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_jckl8")
 
 [node name="MarginContainer3" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -78,8 +91,8 @@ size_flags_vertical = 4
 [node name="Play" type="TextureButton" parent="BoxContainer/VBoxContainer/MarginContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
-texture_normal = ExtResource("3_j7pd5")
-texture_pressed = ExtResource("4_ehjg4")
+texture_normal = ExtResource("4_pt673")
+texture_pressed = ExtResource("5_rj52y")
 
 [node name="MarginContainer2" type="MarginContainer" parent="BoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -87,11 +100,11 @@ layout_mode = 2
 [node name="Menu" type="TextureButton" parent="BoxContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
-texture_normal = ExtResource("5_rfg3x")
-texture_pressed = ExtResource("6_6r6p7")
+texture_normal = ExtResource("6_0hl5j")
+texture_pressed = ExtResource("7_o04pq")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_1r4m0")
+stream = ExtResource("8_35gbb")
 autoplay = true
 bus = &"Music"
 

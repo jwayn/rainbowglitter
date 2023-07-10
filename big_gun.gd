@@ -3,6 +3,7 @@ extends Node2D
 @export var projectile_scene: PackedScene
 @export var time_between_shots: float = .5
 
+signal gun_died
 var can_shoot: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,6 +44,7 @@ func explode_then_die():
 	$AnimationPlayer.play("Die")
 
 func die():
+	gun_died.emit()
 	queue_free()
 
 
