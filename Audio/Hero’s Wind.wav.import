@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://du5cj8yjm3w1c"
+path="res://.godot/imported/Hero’s Wind.wav-9c695d5b72c022d8233fba969bf27cdc.sample"
+
+[deps]
+
+source_file="res://Audio/Hero’s Wind.wav"
+dest_files=["res://.godot/imported/Hero’s Wind.wav-9c695d5b72c022d8233fba969bf27cdc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
