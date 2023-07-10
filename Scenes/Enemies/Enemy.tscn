@@ -146,7 +146,6 @@ visible = false
 scale = Vector2(2, 2)
 texture = ExtResource("7_q3ify")
 hframes = 7
-frame = 3
 
 [node name="EnemyWeaponComponent" parent="." node_paths=PackedStringArray("origin") instance=ExtResource("7_3gsiv")]
 origin = NodePath("../BulletPoint")

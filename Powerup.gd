@@ -12,7 +12,6 @@ func _process(delta):
 
 
 func _on_pickup_area_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
-	print("Hello pt 2?")
 	$PickupArea/CollisionShape2D.set_deferred("disabled", true)
 	$Sprite2D.visible = false
 	$Audio.play()
