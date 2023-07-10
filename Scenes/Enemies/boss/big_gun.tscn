@@ -1,0 +1,174 @@
+[gd_scene load_steps=23 format=3 uid="uid://cprp33mfe0pur"]
+
+[ext_resource type="Script" path="res://big_gun.gd" id="1_5dt1x"]
+[ext_resource type="PackedScene" uid="uid://bvqexymn7w7q1" path="res://Scenes/Projectiles/straight_bullet.tscn" id="2_b33w6"]
+[ext_resource type="Shader" path="res://Scripts/HitFlash.gdshader" id="3_yl1bc"]
+[ext_resource type="Texture2D" uid="uid://vos5cg132oqn" path="res://Sprites/boss_Big_Gun.png" id="4_il1am"]
+[ext_resource type="PackedScene" uid="uid://hjulcjw2yegd" path="res://Components/hurtbox_component.tscn" id="5_yiu1i"]
+[ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="6_fjcmd"]
+[ext_resource type="Texture2D" uid="uid://b2w1km26yjuiy" path="res://Sprites/Explosion_01.png" id="7_wltsn"]
+[ext_resource type="AudioStream" uid="uid://b7fqv5m21kow6" path="res://Audio/Hitmarker_01.wav" id="8_o1ch1"]
+[ext_resource type="AudioStream" uid="uid://cu88r07nsr4qs" path="res://Audio/Hitmarker_02.wav" id="9_w36fw"]
+[ext_resource type="AudioStream" uid="uid://gqjgrwxd7ste" path="res://Audio/Hitmarker_03.wav" id="10_wdbdx"]
+[ext_resource type="AudioStream" uid="uid://dr8khtmvdx134" path="res://Audio/Hitmarker_04.wav" id="11_ixcui"]
+[ext_resource type="AudioStream" uid="uid://curdh4kd8w6up" path="res://Audio/Hitmarker_05.wav" id="12_0xuby"]
+[ext_resource type="AudioStream" uid="uid://b01fqjebai5b3" path="res://Audio/Hitmarker_06.wav" id="13_8l0xs"]
+[ext_resource type="AudioStream" uid="uid://cg2g1ujp3hncw" path="res://Audio/Hitmarker_07.wav" id="14_n62vi"]
+[ext_resource type="AudioStream" uid="uid://cifahvu1b01t0" path="res://Audio/Hitmarker_08.wav" id="15_438m6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_npi6v"]
+shader = ExtResource("3_yl1bc")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l8wy2"]
+radius = 42.0119
+
+[sub_resource type="Animation" id="Animation_tsykn"]
+resource_name = "Die"
+length = 0.4302
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.429152),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0680316, 0.136063, 0.212813, 0.280845, 0.341481, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Explosion:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.43),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_pmfh4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GunSprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vx1ih"]
+resource_name = "hit"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GunSprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0610306, 0.12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k4i2n"]
+_data = {
+"Die": SubResource("Animation_tsykn"),
+"RESET": SubResource("Animation_pmfh4"),
+"hit": SubResource("Animation_vx1ih")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lbkt8"]
+streams_count = 8
+stream_0/stream = ExtResource("8_o1ch1")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("9_w36fw")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_wdbdx")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_ixcui")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_0xuby")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("13_8l0xs")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("14_n62vi")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("15_438m6")
+stream_7/weight = 1.0
+
+[node name="big_gun" type="Node2D"]
+position = Vector2(-238, -121)
+script = ExtResource("1_5dt1x")
+projectile_scene = ExtResource("2_b33w6")
+time_between_shots = 1.0
+
+[node name="GunSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_npi6v")
+position = Vector2(0, 36)
+scale = Vector2(2, 2)
+texture = ExtResource("4_il1am")
+
+[node name="spawn" type="Marker2D" parent="."]
+position = Vector2(0, 76)
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("5_yiu1i")]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 11)
+shape = SubResource("CircleShape2D_l8wy2")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("6_fjcmd")
+MAX_HEALTH = 100
+STARTING_HEALTH = 100
+
+[node name="shot_timer" type="Timer" parent="."]
+
+[node name="Explosion" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("7_wltsn")
+hframes = 7
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k4i2n")
+}
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_lbkt8")
+bus = &"Hit Markers"
+
+[connection signal="damage_taken" from="HealthComponent" to="." method="_on_health_component_damage_taken"]
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]
+[connection signal="timeout" from="shot_timer" to="." method="_on_shot_timer_timeout"]

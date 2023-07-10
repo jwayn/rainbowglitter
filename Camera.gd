@@ -44,7 +44,11 @@ func apply_noise_shake() -> void:
 	
 func apply_noise_sway() -> void:
 	shake_type = ShakeType.Sway
-	
+
+func apply_noise_shake_override(shake_strength_override) -> void:
+	shake_strength = shake_strength_override
+	shake_type = ShakeType.Noise
+
 func _process(delta: float) -> void:
 	# Fade out the intensity over time
 	shake_strength = lerp(shake_strength, 0.0, SHAKE_DECAY_RATE * delta)
